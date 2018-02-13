@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"><HTML>
+<HEAD>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+  <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+  <LINK REL="STYLESHEET" HREF="DocIndex.css" CHARSET="ISO-8859-1" TYPE="text/css">
+  <TITLE>Programming Examples Environment Settings for Pivotal GemFire</TITLE>
+</HEAD>
+<BODY bgcolor="#ffffff">
+     <IMG SRC="../../docs/PIVOTAL_GemFire_220x100.png" BORDER="0">
+     <h1 align="center">Pivotal GemFire<FONT size=6><b><sup><font size=-0>&#174;</font></sup></b></FONT></H1>
+     <H1 align="center">Environment Settings</H1>
+<H2 align="center">Java Caching API Programming Example </H2>
+
+<hr color="#cc0000" width="75%" size="2" align="left">
+
+<p>
+Access the GemFire Release Notes and the GemFire User's Guide at the <a href="http://gemfire.docs.pivotal.io/index.html" target="_blank"><b>Pivotal GemFire Documentation Page</b></a>. 
+<p>Before running the programming examples, make sure your environment is set 
+according to the specifications listed here.
+<p>The general environment settings referred to below 
+are documented in <a href="http://gemfire.docs.pivotal.io/latest/userguide/index.html#getting_started/install_intro.html">Installing Pivotal GemFire</a> section of the <em>GemFire User's Guide</em>. The commands and settings listed  are generally Unix-centric, so adjust as necessary 
+for other operating systems.
+<ol>
+  <li>Temporarily disable your firewall while you are running the examples. This ensures that the examples will perform as expected. <br>
+  <br>
+  <li>Change directory to the top-level GemFire product directory. If you are in the top-level product directory, you should see a number of subdirectories, including <code>bin</code>, <code>defaultConfigs</code>, <code>docs</code>, <code>lib</code>, and <code>DiskConverter</code>. <br>
+    <br>
+    
+  <li>If you have not already done so, install Java. You must have a GemFire-compatible JDK installed on your system. See <a href="http://gemfire.docs.pivotal.io/latest/userguide/index.html#getting_started/system_requirements/supported_configurations.html">Pivotal GemFire Supported Configurations</a> for a list of supported Java versions. You can download the appropriate JDK from <a href="http://www.oracle.com/technetwork/java/index.html" target="_blank">http://www.oracle.com/technetwork/java/index.html</a>. 
+   
+  <p><b>Note:</b> A JDK is required for running <code>gfsh</code> commands, which are used in some of these examples.</p> 
+  <li>Set the environment variable <code>JAVA_HOME</code> to point to your Java JDK installation. For example:
+  
+      <p><strong>Linux, MacOSX, and Solaris Bourne and Korn shells (sh, ksh, bash)</strong></p>
+    <blockquote>
+<code>JAVA_HOME=<em>yourJDK</em>;export JAVA_HOME</code></p>
+    </blockquote>
+    <p><strong>Windows&reg;</strong></p>
+    <blockquote>
+<code>set JAVA_HOME=<em>yourJDK</em></code></p>
+    </blockquote>
+    </li>
+  
+  <li>Set the <code>GF_JAVA</code> environment variable to point to the <code>java</code> executable in your Java JDK environment. The <code>GF_JAVA</code> variable is used by GemFire scripts.</li>
+
+    <p>These are example <code>GF_JAVA</code> configurations. In these examples, <em><code>yourJRE</code></em> or <em><code>yourJDK</code></em> points to the top-level JRE or JDK directory. </p>
+    <p><strong>Solaris&reg;, Linux&reg;, and AIX&reg; Bourne and Korn shells (sh, ksh, bash)</strong></p>
+    <blockquote>
+      <p>If just the JRE runtime is installed: <code>GF_JAVA=<em>yourJRE</em>/bin/java;export GF_JAVA</code></p>
+      <p>If the full Java JDK is installed: <code>GF_JAVA=<em>yourJDK</em>/jre/bin/java;export GF_JAVA</code></p>
+    </blockquote>
+    <p><strong>Windows&reg;</strong></p>
+    <blockquote>
+      <p>If just the JRE runtime is installed: <code>set GF_JAVA=<em>yourJRE</em>/bin/java.exe</code></p>
+      <p>If the full Java JDK is installed: <code>set GF_JAVA=<em>yourJDK</em>/jre/bin/java.exe</code></p>
+    </blockquote>
+  <li>Add   
+    <em>&lt;Path to GemFire product dir&gt;</em><code>/bin</code> to 
+    your <code>PATH</code>.
+	<br><br>
+  <li>Add <em>&lt;Path to GemFire product dir&gt;</em><code>/examples/dist/classes</code> to 
+    your <code>CLASSPATH</code>.<br>
+    For example, this could be <code>C:\GemFireXX/examples/dist/classes</code>, where <code>GemFireXX</code> is the GemFire top-level product directory.
+    <br><br>
+  <li>Add <em>&lt;Path to GemFire product dir&gt;</em><code>/lib/gemfire.jar</code> to the <code>CLASSPATH</code>.
+   <br><br>  
+  <li>Add <em>&lt;Path to GemFire product dir&gt;</em><code>/lib/antlr.jar</code> to the <code>CLASSPATH</code>. <br>
+    <br>
+  <li>If you are running the security exercises in the <code>clientServerConfigs</code> example, include this setting:
+    <br>
+      Add <em>&lt;Path to GemFire product dir&gt;</em><code>/lib/gfSecurityImpl.jar</code> to <code>CLASSPATH</code>.  </li>
+</ol>
+<hr color="#cc0000" width="75%" size="2" align="left">
+</BODY>
+</HTML>

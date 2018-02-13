@@ -1,0 +1,79 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;11.&nbsp;Data Serialization</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="events_lab.html" title="Chapter&nbsp;10.&nbsp;Handling Events on the Client"><link rel="next" href="tranaction-management-lab.html" title="Chapter&nbsp;12.&nbsp;Transaction Management"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="data-serialization-lab"></a>Chapter&nbsp;11.&nbsp;Data Serialization</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="data-serialization-lab-introduction"></a>11.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience with...</p><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Configuring your cache to perform PDX Auto Serialization</p></li><li><p>Working with multiple version of domain objects in PDX</p></li><li><p>Using PdxInstance get a single field </p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 40 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="data-serialization-lab-quick-instructions"></a>11.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="data-serialization-lab-detailed-instructions"></a>11.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. Before beginning any of these tasks. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2844"></a>11.3.1.&nbsp;Configuring the Cache for PDX Auto Serialization</h3></div></div></div><p>In this section, you will focus on configuring PDX Auto Serialization in both the client
+        and server configurations.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) To begin, open the <code class="classname">Customer</code>
+              class definition in the <code class="filename">com.gopivotal.bookshop.domain</code> package.
+              Take a moment to examine how it's written. Note first of all that it does not
+              implement <code class="classname">java.io.Serializable</code> at all. Also note that one of
+              the field is an <code class="classname">Address</code> instance that represent various
+              attributes related to a customer's address (ex. city, state, zipcode, etc). If you
+              like, you can also open this <code class="classname">Address</code> class (in the same
+              package) and note that it also does not implement
+                <code class="classname">java.io.Serializable</code>. In this condition, the only way to
+              ensure these objects are serialized is to use one of the PDX Serialization techniques.
+              Note also that both the <code class="classname">Customer</code> and
+                <code class="classname">Address</code> classes have default constructors, which are a
+              requirement for PDX Serialization.</p></li><li><p>(<code class="literal">TODO-02</code>) Next, open the
+                <code class="filename">xml/serverCache.xml</code> file. Your task is to add the appropriate
+              configuration to enable PDX Serialization in the server cache. This includes
+              configuring the <code class="classname">ReflectionBasedAutoSerializer</code> class as the
+              serializer class.</p></li><li><p>(<code class="literal">TODO-03</code>) In addition, configure a parameter to the auto
+              serializer called <code class="literal">classes</code> that registers the classes that should be
+              auto serialized. You can use wild cards to be sure you get both the
+                <code class="classname">Customer</code> class and <code class="classname">Address</code> class in
+              the <code class="filename">com.gopivotal.bookshop.domain</code> package.</p></li><li><p>(<code class="literal">TODO-04</code>) Finally, add an attribute to the pdx element
+              signaling that the server should NOT de-serialize objects.</p></li><li><p>Use gfsh to start the locator and two servers. </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Unlike prior exercises, you will NOT be using the
+                    <code class="literal">--classpath</code> argument when starting servers. It is important
+                  in observing the benefit of PDX Serialization that the domain classes not be on
+                  the classpath of the servers.</p></td></tr></table></div></li><li><p>(TODO-05) Open the <code class="filename">xml/clientCache.xml</code> file and make a
+              similar modification to the definition to support PDX Auto Serialization. Do NOT set
+              the attribute to force client to read as a serialized object. We actually do want the
+              PDX de-serialization to take place on the client.</p></li><li><p>(TODO-06) Locate the <code class="classname">CustomerLoader</code> class in the
+                <code class="filename">com.gopivotal.bookshop.buslogic</code> package and run it. This will
+              load 3 customers into the Customer region on the server.</p></li><li><p>Return to gfsh and execute a query to select values from the Customer
+              region.</p><p>You should see something like the following as
+              output.</p><pre class="programlisting">customerNumber | firstName | lastName |                     primaryAddress                      | 
+myBookOrders
+-------------- | --------- | -------- | ------------------------------------------------------- | 
+-------------------------
+5598           | Kari      | Powell   | class com.gemstone.gemfire.pdx.internal.PdxInstanceImpl | 
+class java.util.ArrayList
+6024           | Trenton   | Garcia   | class com.gemstone.gemfire.pdx.internal.PdxInstanceImpl | 
+class java.util.ArrayList
+5543           | Lula      | Wax      | class com.gemstone.gemfire.pdx.internal.PdxInstanceImpl | 
+class java.util.ArrayList
+</pre></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2947"></a>11.3.2.&nbsp;Working with PDX Domain Object Versions</h3></div></div></div><p>In this section, you'll begin to understand the power of PDX as you modify the
+        definition of the <code class="classname">Customer</code> class and see that multiple versions of
+        the class definition can be used within the GemFire distributed system at the same time.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-07</code>) To begin, open the <code class="classname">Customer</code>
+              class again and add a <code class="literal">telephoneNumber</code> field of type
+                <code class="classname">String</code>. Also add a getter and setter method. You might also
+              want to go to the <code class="methodname">toString()</code> method and add code to ensure
+              the values of this new field get printed.</p></li><li><p>(<code class="literal">TODO-08</code>) Open the <code class="classname">NewCustomerClient</code>
+              class in the <code class="filename">com.gopivotal.bookshop.buslogic</code> package and locate
+              the <code class="methodname">testCustomer()</code> method.  Write the code to create a new
+                <code class="classname">Customer</code> instance. Be sure to set the new
+                <code class="literal">telephoneNumber</code> property. Save the entry with the key
+                <code class="literal">9999</code>.</p></li><li><p>(TODO-09) Locate the <code class="methodname">testGet()</code> method and add code to get
+              the newly inserted <code class="literal">Customer</code> entry (key: <code class="literal">9999</code>)
+              and print it out.</p></li><li><p>Run <code class="classname">NewCustomerClient</code> to insert this new record into GemFire.</p></li><li><p>Return to gfsh and re-issue the query command. This time, note that there is the
+              additional entry for key <code class="literal">9999</code>.  Notice also that there is a new
+              field displayed for <code class="literal">telephoneNumber</code>. Note that the first three
+              entries now show this field value as <code class="literal">null</code>, which is the expected
+              behavior.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3028"></a>11.3.3.&nbsp;Using PdxInstance</h3></div></div></div><p>In this last section, you will gain familiarity working with the PdxInstance object.
+        This object will offer the ability to only de-serialize the fields that are required to
+        perform necessary processing.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-10</code>) Open the <code class="classname">PdxInstanceClient</code>
+              class in the <code class="filename">com.gopivotal.bookshop.buslogic </code>package and locate
+              the <code class="methodname">testPdxGet()</code> method. Add the necessary code to fetch the
+              entry for key <code class="literal">9999</code>, processing as a <code class="literal">PdxInstance</code>.
+              Extract and print just the <code class="literal">telephoneNumber</code> field.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>It may be a good idea to add a test to ensure the instance you got back is an
+                  instance of PdxInstance and print out a notice if it isn't.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-11</code>) Return to the <code class="filename">clientCache.xml</code>
+              file and add the appropriate attribute to the pdx element to tell the client cache NOT
+              to de-serialize entries into <code class="classname">Customer</code> objects. This is
+              important if you intend to process your entries as <code class="classname">PdxInstance</code>
+              objects.</p></li><li><p>Run the <code class="classname">PdxInstanceClient</code> and verify that you were able to
+              obtain the <code class="literal">telephoneNumber</code> field and that it is the correct value.
+              It should be the value you set in the prior section when you created the new
+                <code class="classname">Customer</code> entry.</p></li></ol></div><p>Congratulations!! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="events_lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="tranaction-management-lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;10.&nbsp;Handling Events on the Client&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;12.&nbsp;Transaction Management</td></tr></table></div></body></html>

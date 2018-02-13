@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  | serverCache.xml
+  |
+  | Initializes two regions
+-->
+<cache
+    xmlns="http://schema.pivotal.io/gemfire/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+    version="8.1">
+
+        <region name="BookMaster">
+			<!-- Define the BookMaster region to be Replicated using region attributes and
+			     region shortcuts. -->
+        </region>
+
+        <region name="Customer">
+	        <!-- Define the Customer region to be partitioned using region shortcuts -->
+	        <!-- Ensure that there is one redundant copy and there is a recover delay of 5 seconds-->
+        </region>
+        <!-- Used by lab exercise for detailed bucket output -->
+        <function-service>
+          <function>
+            <class-name>com.gopivotal.training.prb.PRBFunction</class-name>
+          </function>
+        </function-service>
+</cache>

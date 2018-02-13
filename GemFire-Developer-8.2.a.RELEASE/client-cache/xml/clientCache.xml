@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client-cache
+    xmlns="http://schema.pivotal.io/gemfire/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+    version="8.1">
+	<!-- TODO-01: Define a pool with one entry configured to contact the locator at locahost and listening on port 41111 -->
+
+    <!-- TODO-02:  Define Customer Region as a PROXY region type. Also, create a BookMaster region with CACHING_PROXY region type. -->
+    
+	
+    <!-- TODO-07: Define a region called "LocalRegion" with LOCAL region type 	-->
+
+</client-cache>

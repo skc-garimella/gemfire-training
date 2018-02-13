@@ -1,0 +1,59 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;13.&nbsp;Writing Server Side Functions</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="tranaction-management-lab.html" title="Chapter&nbsp;12.&nbsp;Transaction Management"><link rel="next" href="functions_lab.html" title="Chapter&nbsp;14.&nbsp;Client Function Execution"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="server-functions-lab"></a>Chapter&nbsp;13.&nbsp;Writing Server Side Functions</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-functions-lab-introduction"></a>13.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience with writing and registering  a GemFire
+      function. A test client will invoke the function on several GemFire servers to extract
+      customer details for a given city.</p><div class="mediaobject"><img src="images/function_exectution.jpg"></div><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Developing a GemFire function</p></li><li><p>Register functions using XML configuration</p></li><li><p>Execute the function on multiple servers</p></li><li><p>Invoke the function from a client application</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 30 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-functions-lab-quick-instructions"></a>13.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-functions-lab-detailed-instructions"></a>13.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. Before beginning any of these tasks. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3452"></a>13.3.1.&nbsp;Develop the Function</h3></div></div></div><p>Function execution allows you to move function behavior to the application member
+        hosting the data. In this exercise, you develop a function to perform a sum a specified
+        field of all entries for a given region. This will offer an opportunity to explore one of
+        the use cases functions can be used for in GemFire. For simplicity, this 'generic' summing
+        function, we'll assume that the type used for summing is
+          <code class="classname">java.lang.Float</code>.</p><p>To perform this task, open the <code class="literal">server-functions</code> project in the STS. </p><div class="orderedlist"><ol type="1"><li><p>Open the <code class="classname">GenericSumFunction</code> class in the
+                <code class="filename">com.gopivotal.bookshop.buslogic</code> package. Notice that this class
+              extends <code class="classname">FunctionAdapter</code> class and also implements the
+                <code class="classname">Declarable</code> interface.</p></li><li><p>You will implement the execute() function using the following steps.</p><div class="orderedlist"><ol type="a"><li><p>(<code class="literal">TODO-01</code>) Enforce that the
+                      <code class="classname">FunctionContext</code> is an instance of
+                      <code class="classname">RegionFunctionContext</code>. It's important that this be done
+                    as this function is only designed to be run via the
+                      <code class="methodname">onRegion(..)</code> method calls. You might throw a
+                      <code class="classname">FunctionException</code> if this prerequisite isn't met.
+                    Assuming the <code class="classname">FunctionContext</code> is an instance of
+                      <code class="classname">RegionFunctionContext</code>, cast up to an instance of
+                      <code class="classname">RegionFunctionContext</code>.</p></li><li><p>(<code class="literal">TODO-02</code>) Use the FunctionContext to get the argument
+                    passed from the client. This will represent the field on the
+                      <code class="classname">PdxInstance</code> for which the summing operation will be
+                    performed.</p></li><li><p>(<code class="literal">TODO-03</code>) Use the
+                      <code class="classname">PartitionRegionHelper</code> class to get all the local region
+                    data. We'll later add additional configuraiton to ensure that the local data
+                    obtained is strictly primary region data. Also initialize an instance of
+                      <code class="classname">BigDecimal</code> as this will be used to hold the sum amount
+                    that will be returned by the function.</p></li><li><p>(<code class="literal">TODO-04</code>) Iterate over the local data, which should be a
+                    collection of <code class="classname">PdxInstance</code> objects. We'll later add
+                    configuration to enable PDX Serialization and to enforce that data read on the
+                    server side remains serialized.</p></li><li><p>(<code class="literal">TODO-05</code>) Use the argument provided to de-serialize
+                    (extract) the field that will be used for summing. Initially, extract an
+                      <code class="classname">Object</code>. In a successive step, make sure the field is an
+                    instance of <code class="classname">Float</code> as you will be making that assumption.
+                    If it an instance of <code class="classname">Float</code>, add this value to the current
+                    sum amount.</p></li><li><p> (<code class="literal">TODO-06</code>) Once all entries have been processed, send the
+                    final sum back to the caller. Since you will be only sending one result for this
+                    execution, make sure that you signal that you are completed sending
+                    results.</p></li></ol></div></li><li><p>(<code class="literal">TODO-07</code>) Add an overridden method that will enforce that only
+              primary buckets be considered when processing local data. </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>If in doubt, go back and review the slides around the Function API. It will
+                  help if you annotate the method with <code class="classname">@Override</code> so that you
+                  can be sure you are correctly overriding the method.</p></td></tr></table></div></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3575"></a>13.3.2.&nbsp;Register the Function and Start Servers</h3></div></div></div><p>You'll need to register the function you just wrote with the server cache configuration.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-08</code>) Next, open the
+              <code class="filename">serverCache.xml</code>file and add the necessary configuration to enable
+              PDX Serialization using the
+              <code class="classname">ReflectionBasedAutoSerializer</code>.</p></li><li><p>(<code class="literal">TODO-09</code>) Add the appropriate configuration to register the
+              function</p></li><li><p>(<code class="literal">TODO-10</code>) Start the locator and 2 servers using similar
+              approach as in the prior few labs. In particular, you will need to use the
+                <code class="literal">--classpath=../target/classes</code> option. Next, execute
+                <code class="classname">OrderLoader</code> class found in the
+                <code class="filename">com.gopivotal.bookshop.buslogic</code> package in STS. This will load
+              the Order Region with data.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3614"></a>13.3.3.&nbsp;Calling the Function</h3></div></div></div><p>Finally, you will test the function using the <code class="classname">SummingFunctionTest</code>
+        JUnit test found in <code class="filename">src/test/java</code>. </p><div class="orderedlist"><ol type="1"><li><p>In the next lab exercise, you will focus on the writing the code to execute the
+              function and process the results. For now, you will just worry about executing the
+              function and verifying the results.</p></li><li><p>(<code class="literal">TODO-11</code>) Go ahead and run the program from the STS. You see
+              that the test passes.</p></li><li><p>Stop the servers and locator.</p></li></ol></div><p>Congratulations!! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tranaction-management-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="functions_lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;12.&nbsp;Transaction Management&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;14.&nbsp;Client Function Execution</td></tr></table></div></body></html>

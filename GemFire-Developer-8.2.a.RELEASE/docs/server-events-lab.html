@@ -1,0 +1,60 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;9.&nbsp;Server Side Event Handling</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="cache-management-lab.html" title="Chapter&nbsp;8.&nbsp;Cache Management"><link rel="next" href="events_lab.html" title="Chapter&nbsp;10.&nbsp;Handling Events on the Client"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="server-events-lab"></a>Chapter&nbsp;9.&nbsp;Server Side Event Handling</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-events-lab-introduction"></a>9.1.&nbsp;Introduction</h2></div></div></div><p>In an earlier lab, you became familiar with client side even handling. In this lab, you
+      will learn to configure events on the server side of a GemFire distributed system.</p><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Creating and registering a CacheLoader </p></li><li><p>Creating and registering a CacheWriter</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 30 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-events-lab-quick-instructions"></a>9.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-events-lab-detailed-instructions"></a>9.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. Before beginning any of these tasks. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2295"></a>9.3.1.&nbsp;Preparation</h3></div></div></div><p>In performing the steps of this lab, you will take a bit of a Test Driven Development
+        approach. You will first run the series of tests, find all (or most) fail and then set about
+        creating solutions to cause them to pass.</p><div class="orderedlist"><ol type="1"><li><p>To begin, navigate to the <code class="literal">server-events</code> project in the STS.
+              Locate the <code class="classname">ServerEventsTests</code> class in
+                <code class="filename">src/test/java</code> under the
+                <code class="filename">com.gopivotal.bookshop.tests</code> package. Open it up and take a
+              look at the various tests. </p></li><li><p>Next start the locator and one server. The easiest way to do this is to open a
+              terminal or command window and change directories to this lab folder
+                (<code class="filename">server-events</code>). Then issue the following command.</p><pre class="programlisting">gfsh run --file=serverStart.gf</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>If gfsh fails to run, it's likely because you don't have your environment
+                  variables set.  Recall that these were defined in one of the first labs in the
+                    <code class="filename">server-bootstrap/scripts</code> folder. Locate that file and
+                  either run <code class="filename">setEnv.bat</code> for Windows or <span><strong class="command">source
+                    gf.config</strong></span> for Mac/Linux. Once done, go back and re-try the above gfsh
+                  command.</p></td></tr></table></div></li><li><p>Finally, run the tests (right mouse click on <code class="literal">ServerEventsTest  -&gt; Run As
+                - JUnit Test</code>). You will see that 2 of the 3 tests currently fail.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2342"></a>9.3.2.&nbsp;Creating and Implementing a CacheLoader</h3></div></div></div><p>The objective of the cache loader is to load data on cache misses on the GemFire server.
+          <code class="methodname">The load()</code> method is called when the
+          <code class="methodname">region.get()</code> operation can't find the value in the cache. The
+        value returned from the cache loader is put into the cache, and returned to the
+          <code class="methodname">get()</code> operation.</p><div class="orderedlist"><ol type="1"><li><p>The definition of the <code class="classname">BookMasterCacheLoader</code> class is
+              provided in the <code class="filename">com.gopivotal.bookshop.buslogic</code> package. Open
+              this class file and add the code in the <code class="methodname">load()</code> method to
+              return a new <code class="classname">BookMaster</code> instance. It can either  be explicitly
+              generated in this method or by a helper class that you create. Ordinarily this would
+              be loaded from an external data source such as a JDBC data source.</p></li><li><p>Open the <code class="filename">serverCache.xml</code> file and add the necessary
+              configuration to register the <code class="classname">BookMasterCacheLoader</code> with the
+                <code class="literal">BookMaster</code> region.</p></li><li><p>Stop and re-start the server. It should now be running with the newly registered
+                <code class="classname">BookMasterCacheLoader</code>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>To stop the servers, you can use a similar command to the above start
+                  command.</p><pre class="programlisting">gfsh run --file=serverStop.gf</pre></td></tr></table></div></li><li><p>Re-run the <code class="classname">ServerEventsTests</code> unit tests and note that the
+              first test (<code class="methodname">testCacheLoader() </code>now passes). </p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2404"></a>9.3.3.&nbsp;Creating and Implementing a CacheWriter</h3></div></div></div><p>In this section, you will implement a <code class="classname">CacheWriter</code> that performs
+        validation of new entries. If you recall, any new entries that are created will fire the
+          <code class="methodname">beforeCreate()</code> event method. One of the benefits of having this
+        method called before the actual insert is that we can perform validation to ensure entries
+        meet our desired expectation.</p><div class="orderedlist"><ol type="1"><li><p>To begin, refer to your <code class="classname">ServerEventsTests</code> unit test. The
+              last two tests are designed to assert the correct behavior of your
+                <code class="classname">ValidatingCacheWriter</code> implementation. </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>In reality, the <code class="methodname">testValidatingCacheWriterSuccess()</code>
+                  method would pass even if there was no <code class="classname">CacheWriter</code>
+                  registered as you've already seen.  The main purpose of this method is to ensure
+                  that a correct insert does NOT generate an error.</p></td></tr></table></div></li><li><p>Now, open the <code class="classname">ValidatingCacheWriter</code> class in the
+                <code class="filename">com.gopivotal.bookshop.buslogic</code> package.  Notice that the
+                <code class="methodname">beforeCreate()</code> method is left open for you to implement the
+              functionality. Also note that there is a method called
+                <code class="methodname">validateNewValue()</code> where the logic is performed to
+              determine a valid entry. Take a moment to examine this code. You've had some
+              experience already with querying from the client. This is an example of a query being
+              performed on the server. As you can see, a prospective book is considered valid if no
+              other entry exists having the same <code class="literal">itemNumber</code> value.</p></li><li><p>Now, return to the <code class="methodname">beforeCreate()</code> method and implement
+              the appropriate functionality to obtain the correct value, call the validate method
+              and throw a <code class="classname">CacheWriterException</code> if the book is considered
+              invalid.</p></li><li><p>Return to the <code class="filename">serverCache.xml</code> file and add the necessary
+              configuration to register the <code class="classname">ValidatingCacheWriter</code> with the
+                <code class="literal">BookMaster</code> region.</p></li><li><p>Save your work, stop and re-start the server.</p></li><li><p>Verify you've correctly implemented and registered the
+                <code class="classname">ValidatingCacheWriter</code> by re-running the
+                <code class="classname">ServerEventsTests</code> JUnit test. All tests should now
+              pass.</p></li></ol></div><p>Congratulations!! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="cache-management-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="events_lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;8.&nbsp;Cache Management&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;10.&nbsp;Handling Events on the Client</td></tr></table></div></body></html>

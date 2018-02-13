@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding=".classpath|.project|QuickStart.css|QuickStart.html|classes/|gemfire.properties|overflowData1/|persistData1/|xml/" kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="GEMFIRE/lib/gemfire.jar"/>
+	<classpathentry kind="output" path="eclipse.classes"/>
+</classpath>

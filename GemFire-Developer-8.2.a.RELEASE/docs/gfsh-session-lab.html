@@ -1,0 +1,97 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;4.&nbsp;gfsh practice</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="server-regions-lab.html" title="Chapter&nbsp;3.&nbsp;Server Regions - Replicated and Partitioned"><link rel="next" href="client-cache_lab.html" title="Chapter&nbsp;5.&nbsp;Client Cache"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="gfsh-session-lab"></a>Chapter&nbsp;4.&nbsp;gfsh practice</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="gfsh-introduction"></a>4.1.&nbsp;Introduction</h2></div></div></div><p>
+      This lab is intended to increase your familiarity with <code class="literal">gfsh</code>, the gemfire shell.
+      Unlike other labs, this lab has no code component:  all tasks will be performed inside the shell.
+    </p><p>
+      In this lab, you will learn:
+      </p><div class="itemizedlist"><ul type="disc"><li>
+          how to launch and exit the shell
+        </li><li>
+          starting and stopping locators, servers
+        </li><li>
+          creating a region, inserting data, querying regions
+        </li><li>
+          obtain information about cluster members, regions
+        </li></ul></div><p>
+    </p><p>
+      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+        Full documentation for gfsh is available at:
+        <a href="http://gemfire.docs.pivotal.io/docs-gemfire/latest/tools_modules/gfsh/chapter_overview.html" target="_top">
+          http://gemfire.docs.pivotal.io/docs-gemfire/latest/tools_modules/gfsh/chapter_overview.html
+        </a></td></tr></table></div><p>
+    </p><p><span class="bold"><strong>Estimated completion time</strong></span>: 20 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="gfsh-overview"></a>4.2.&nbsp;Overview</h2></div></div></div><p>
+      This session is intended to be a brief tour of working within <code class="literal">gfsh</code>.
+      Among other things, you will be starting a locator, servers, a region, inserting and querying data,
+      stop and restart a server, and validating the expected behavior of the system.  Let's get started.
+    </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="gfsh-instructions"></a>4.3.&nbsp;Instructions</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e823"></a>4.3.1.&nbsp;Launching and exiting gfsh</h3></div></div></div><p>
+      Gemfire bundles the command line tool <code class="literal">gfsh</code>.  You will find it located in <code class="literal">$GEMFIRE/bin</code>, which should be in your <code class="literal">$PATH</code>, so that, launching the shell is simply a matter of invoking the command: <span><strong class="command">gfsh</strong></span>.
+      </p><p>
+      To quit gfsh, simply type <span><strong class="command">exit</strong></span>.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e845"></a>4.3.2.&nbsp;Stopping existing servers and locators</h3></div></div></div><p>
+        Go ahead and launch gfsh, and make sure that prior running servers and locators are stopped.  To do that, perform the following:
+        </p><div class="itemizedlist"><ul type="disc"><li>
+            connect to the running locator with <span><strong class="command">connect --locator=localhost[41111]</strong></span> (if you get a message saying you could not connect, it's likely you have no locator running, in which case proceed to the next section).
+          </li><li>
+           invoke the command <span><strong class="command">shutdown</strong></span> to stop the servers,
+          </li><li>
+           stop the locator with the command <span><strong class="command">stop locator</strong></span> (you'll have to supply the name of the locator you wish to stop (it should simply be 'locator')).
+          </li></ul></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e867"></a>4.3.3.&nbsp;Built-in help</h3></div></div></div><p>
+        <code class="literal">gfsh</code> comes with built-in help at multiple levels.
+      </p><p>
+        In its most general form, simply invoking <span><strong class="command">help</strong></span> will list all available commands.
+      </p><p>
+        Notice that many of the commands begin with the same verb, such as <code class="literal">start</code>, <code class="literal">stop</code>, <code class="literal">status</code>, and <code class="literal">list</code>.
+        For example, to learn more about the start command, type <span><strong class="command">help start</strong></span>.
+      </p><p>
+        To obtain feedback on a specific command, such as "start server," type <span><strong class="command">help start server</strong></span>.  Notice the output will provide information about all options that can be supplied along with this command.  The list of options for starting a server is rather lengthy.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e902"></a>4.3.4.&nbsp;Start a locator</h3></div></div></div><p>
+        Let's begin by starting a locator.  Try to type just <span><strong class="command">start locator</strong></span> and see what happens.  What feedback do you get?
+        </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">If no port number is specified, the locator will start on its default port number, 10334</td></tr></table></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e913"></a>4.3.5.&nbsp;Start a server</h3></div></div></div><p>
+      Start a server, make sure to give it the name "server1."
+      </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><code class="literal">gfsh</code> sports command completion.  Many commands, such as <span><strong class="command">start server</strong></span> come with many options.  As you construct your command, use the <code class="literal">tab</code> key to obtain a list of options to append to your command.
+      </td></tr></table></div><p>
+        In prior labs, we usually referenced a gemfire <code class="literal">properties-file</code>.  In this case, do not supply this option as we have no need to reference, for example, the location of a server cache.xml file.
+      </p><p>
+        Also, rather than manage the specific port our server will listen on, let gemfire select the port number.  To do this, make sure to supply the option <span><strong class="command">server-port</strong></span> with a value of 0.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e938"></a>4.3.6.&nbsp;Validate running locator and server</h3></div></div></div><p>
+        In gfsh parlance, the locator and server we just started are known as members.  To verify that we have one of each running, invoke the command <span><strong class="command">list members</strong></span>.  Inspect the output.
+      </p><p>
+        To gain more information about these two running members, explore the <span><strong class="command">describe member</strong></span> command.  Use the built-in help to help you figure out how to invoke the command for each your locator and server1.
+      </p><p>
+        Inspect the output.  For the server, can you tell whether it's running, what the running port is, and the locator it's associated with?
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e953"></a>4.3.7.&nbsp;Regions</h3></div></div></div><p>
+        Let's create a replicated region named "people."  Again use the help command to assist you in figuring out the syntax.  You'll need to use the <span><strong class="command">type</strong></span> option to specify that the type of region you want to create is a replicated region (the value you supply here is case sensitive).
+      </p><p>
+        Just like we can list members, we can also list regions.  Go ahead and use the <span><strong class="command">list regions</strong></span> command to verify that the region named "people" was properly created.
+      </p><p>
+        We can also describe regions.  Run the <span><strong class="command">describe region</strong></span> command on the people region and inspect the output.  Verify the region type.
+      </p><p>
+        Our region is empty for now.  Let's verify this by querying it.  Use the <span><strong class="command">query</strong></span> command for this.  If you haven't yet gone over the lab about OQL and the gemfire query language, you can use the following simple query: <span><strong class="command">select * from /people</strong></span>.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e979"></a>4.3.8.&nbsp;Inserting data</h3></div></div></div><p>
+        Insert a simple record into the people region.  Supply a key and a value and make sure you specify what region you want to "put" (hint) this record into.
+      </p><p>
+        Run your query one more time to verify that the record was inserted.
+      </p><p>
+        Insert a second record into the people region.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e988"></a>4.3.9.&nbsp;Start a second server</h3></div></div></div><p>
+        Start a second server named "server2."  Once more, let gemfire select what port the server should listen on.
+      </p><p>
+        Run <span><strong class="command">list members</strong></span> once more to verify that we now have two running servers.
+      </p><p>
+        Run the query once more against the people region to verify that it still functions properly.
+      </p><p>
+        Describe the people region once more.  Notice that both server1 and server2 are listed as "hosting members."  This is a validation that the data is being replicated across both servers.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1002"></a>4.3.10.&nbsp;Stop server1</h3></div></div></div><p>
+        Use the <span><strong class="command">stop server</strong></span> command to stop server1.  Inspect the output of <span><strong class="command">list members</strong></span> to validate that server1 is no longer running.  Run the query once more.  Notice that it is still working because we had redundancy/replication.
+      </p><p>
+        Start server1 back up.
+      </p><p>
+        Explore the <span><strong class="command">status server</strong></span> command on either of the running servers.  What additional information can we glean about the server compared to the <span><strong class="command">describe member</strong></span> command?
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1023"></a>4.3.11.&nbsp;Exit, then return to the shell</h3></div></div></div><p>
+        At this point, issue the <span><strong class="command">exit</strong></span> command to exit the shell.  Now re-invoke gfsh and re-connect to your locator (port number should be 10334).  Notice that your servers should still be running.  So, exiting merely detaches you from the shell but has no impact on the running servers.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1031"></a>4.3.12.&nbsp;Shutting down</h3></div></div></div><p>
+        Issue the command <span><strong class="command">shutdown</strong></span> to stop your servers.  Using the built-in help, issue the <span><strong class="command">stop locator</strong></span> command to stop your locator.
+      </p><p>In this session, we've covered a lot of ground.  Although we haven't explored the myriad of options that many of the commands sport, you should now be familiar and comfortable enough with gfsh to explore further.  Congratulations!! You have completed this lab.  </p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="server-regions-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="client-cache_lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;3.&nbsp;Server Regions - Replicated and Partitioned&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;5.&nbsp;Client Cache</td></tr></table></div></body></html>

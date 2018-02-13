@@ -1,0 +1,68 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;14.&nbsp;Client Function Execution</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="server-functions-lab.html" title="Chapter&nbsp;13.&nbsp;Writing Server Side Functions"><link rel="next" href="spring-gemfire_lab.html" title="Chapter&nbsp;15.&nbsp;Spring GemFire"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="functions_lab"></a>Chapter&nbsp;14.&nbsp;Client Function Execution</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e3643"></a>14.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience working with executing server-side
+      functions from a GemFire client cache. In the prior lab, you gained experience writing and
+      registering and testing a function that provides generic summation capabilities. For this lab,
+      that function has already been created and registered on the server. You task in this lab is
+      to set up the client with the necessary configuration and programming to enable the client to
+      call this function and process the result.</p><p>The basic execution flow is illustrated below.</p><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="450"><tr><td><img src="images/function_execution.png" width="450"></td></tr></table></div><p><span class="bold"><strong>What you will learn</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>How to execute functions on the server</p></li><li><p>How to process results from execution</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 30 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e3667"></a>14.2.&nbsp;Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3672"></a>14.2.1.&nbsp;Enabling PDX Serialization</h3></div></div></div><p>To begin, you will be making the necessary modifications to enable client to perform PDX Serialization.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) To begin, open the
+                <code class="filename">clientCache.xml</code> file and add the necessary configuration to
+              enable PDX Serialization using the
+                <code class="classname">ReflectionBasedAutoSerializer</code>.  On the client side, you will
+              NOT request read serialized.</p></li><li><p>(<code class="literal">TODO-02</code>) In the same XML file and in the PDX configuration,
+              add additional configuration to define the appropriate classes to serialize. These
+              will be <code class="classname">BookOrder</code> and <code class="classname">BookOrderItem</code>.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3702"></a>14.2.2.&nbsp;Implementing a Custom <code class="classname">Result Collector</code></h3></div></div></div><p>In this section, you will be implementing a custom <code class="classname">Result
+          Collector</code>. The purpose of this custom result collector is to take all the sum
+        values sent by each member executing the function and provide a final sum representing the
+        aggregate sum of the specified field for all data in all members hosting the partitioned region.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-03</code>) Next, open the
+                <code class="classname">SummingResultCollector</code> class in the
+              <code class="filename">com.gopivotal.bookshop.buslogic</code> package. You will need to add a class field to hold
+              the results. If necessary, open the <code class="classname">GenericSummingFunction</code>
+              class, provided in this project for reference,  and take note of the type used to send
+              results. If you think about what is trying to be accomplished, the objective is to
+              have one final sum amount to return to the caller once all results have been returned
+              from the members executing the function. Define the variable and initialize it
+              now.</p></li><li><p>(<code class="literal">TODO-04</code>) Next, go to the <code class="methodname">addResult()</code>
+              method and implement the functionality for what means to add a result to the current
+              results.</p></li><li><p>(<code class="literal">TODO-05</code>) Next, locate the
+                <code class="methodname">clearResults()</code> method and implement the functionality for
+              what it means to clear results.</p></li><li><p>(<code class="literal">TODO-06</code>) Finally, locate the
+                <code class="methodname">getResults()</code> method and implement this functionality.
+              Recall that this is the method used to provide the final results back to the client
+              caller.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3755"></a>14.2.3.&nbsp;Writing Client to Execute the Function</h3></div></div></div><p>In this section, you will be writing the necessary client code to execute a function
+        that has already been registered on the server and leveraging the result collector you just
+        defined. Use the following steps to complete this section.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-07</code>) Open the <code class="classname">SummingTests</code> test class.
+              Locate the <code class="methodname">shouldComputeTotalForAllOrders()</code> method and add
+              code that defines the Function execution. To do this, you will define an
+                <code class="methodname">onRegion()</code> type function call on the
+                <code class="classname">BookOrder</code> region and you will be passing an argument in to
+              perform the sum on the field called <code class="literal">totalPrice</code> and use the custom
+                <code class="classname">ResultCollector</code> called
+                <code class="classname">SummingResultCollector</code>.</p><p>Also in this step, add a call to execute the function by name (which should
+              include the package and class). This call returns a
+                <code class="classname">ResultCollector</code>, which you should assign to a variable so you
+              can use it in the next step.</p></li><li><p>(<code class="literal">TODO-08</code>) With the result collector, call the method to get the
+              results. This result should be a single object. Refer to the
+                <code class="classname">SummingResultCollector</code> to see what type is returned and
+              assign to a variable of that type. Assert that the result returned is equal to the
+              amount <code class="literal">93.95</code>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Due to typical rounding errors that can happen with
+                    <code class="classname">Float</code> and such, you may want to create a BigDecimal to
+                  compare to using a technique like this: <code class="literal">new
+                  BigDecimal("93.95")</code>.</p></td></tr></table></div></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3814"></a>14.2.4.&nbsp;Running the Test</h3></div></div></div><p>In this section, you will be running the test code you just finished writing to verify
+        correct implementation of both the execution part as well as the result collector part.
+        Before beginning this section, you will need the locator and servers running. If they are
+        still running from the server functions lab, you can use them and ignore step 1 below.
+        Otherwise, use the following steps to complete this lab.</p><p>
+        </p><div class="orderedlist"><ol type="1"><li><p>Make sure the server and locator are running by using the
+                <code class="literal">server-bootstrap</code> project
+                <code class="filename">scripts/startServerPartitioned.sh</code> or
+                <code class="filename">scripts/startServerPartitioned.bat</code> scripts.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Due to the specific requirements for this lab, it is important that the
+                  GemFire servers be running using the startup configuration from the server
+                  functions lab or by running the script described above. If neither of these is
+                  true or you are uncertain, the simplest thing to do is stop all GemFire processes
+                  and use one of the start scripts in the <code class="literal">server-bootstrap</code>
+                  project.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-09</code>) Finally, run <code class="classname">SummingTests</code> to verify all is
+              working correctly. You may not see any output except a notification that the cache is
+              closing.</p></li></ol></div><p>
+      </p><p>Congratulations! You've completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="server-functions-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="spring-gemfire_lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;13.&nbsp;Writing Server Side Functions&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;15.&nbsp;Spring GemFire</td></tr></table></div></body></html>

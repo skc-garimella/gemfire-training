@@ -1,0 +1,86 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;3.&nbsp;Server Regions - Replicated and Partitioned</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="server-configuration-lab.html" title="Chapter&nbsp;2.&nbsp;Server Configuration"><link rel="next" href="gfsh-session-lab.html" title="Chapter&nbsp;4.&nbsp;gfsh practice"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="server-regions-lab"></a>Chapter&nbsp;3.&nbsp;Server Regions - Replicated and Partitioned</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-regions-lab-introduction"></a>3.1.&nbsp;Introduction</h2></div></div></div><p>This lab will take you through the process of creating both replicated regions and
+      partitioned regions in GemFire. An XML file will be used for the configuration, which is
+      generally a best practice.  </p><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>How to create a replicated region across multiple servers</p></li><li><p>Testing the failover and refresh of data on recovered nodes</p></li><li><p>Configuring partitioned regions in GemFire</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 45 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-regions-lab-quick-instructions"></a>3.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="server-regions-lab-detailed-instructions"></a>3.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. </p><p>If servers and locator are still running from the previous lab, be sure to stop them at
+      this point. Remember, in order to shut the services down, you'll need to re-connect to the
+      locator using the command <span><strong class="command">connect --locator=localhost[41111]</strong></span>.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e519"></a>3.3.1.&nbsp;Creating Replication Regions</h3></div></div></div><p>In this first section, you will work with the BookMaster region. The data that this
+        region holds is a relatively small amount, is slow changing, and tends to be reference data.
+        This is the type of data that is a good candidate for replication. We will walk through
+        defining a region as replicated, watching shutdown of nodes, and the redundancy.</p><div class="orderedlist"><ol type="1"><li><p>Browse to the server-regions project folder on the command line. This will be your
+              starting point for this lab.</p></li><li><p>Use the STS to open the <code class="filename">serverCache.xml</code> file in the
+              server-regions project folder.  Add a region attribute to define the
+                <code class="literal">BookMaster</code> region as a replicated region.</p></li><li><p>If the locator is not running, start it using <code class="literal">gfsh</code> and the
+              command similar to the one used in the prior lab.</p></li><li><p>Start <code class="literal">server1</code> using a similar command as used in the prior lab.
+              Do NOT start the second server yet.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>As of GemFire 8, the server startup command from within gfsh has changed and
+                does not automatically include everything in the current CLASSPATH environment
+                variable in the classpath of the servers when started. Most of this lab makes use of
+                a special function that is registered with the server that must be on the server
+                classpath. As a result, you will need to explicitly include the option:
+                  <span><strong class="command">--classpath=../target/classes/</strong></span> to the server start
+                commands.</p></td></tr></table></div></li><li><p>In the STS, locate and run the <code class="classname">BookLoader</code> class to load 3
+              books into the <code class="literal">BookMaster</code> region.</p></li><li><p>Open the <code class="classname">ReplicationTest</code> class to understand how it looks
+              for values in the <code class="literal">BookMaster</code> region.</p></li><li><p>Run the <code class="classname">ReplicationTest</code> to verify that the books were
+              found.</p></li><li><p>Start the second server using the name <code class="literal">server2</code> so it will write
+              log data to a different directory. </p></li><li><p>You can examine the region details by executing the gfsh command <span><strong class="command">show
+                metrics --region=/BookMaster</strong></span>. Note the member count and the number of
+              entries for the cluster.</p></li><li><p>Stop server1 using the gfsh <span><strong class="command">stop server</strong></span> command.</p></li><li><p>Re-run the <code class="classname">ReplicationTest</code> application to verify that the
+              data still can be found in the remaining server (the new server 2 that was
+              started).</p></li><li><p>Stop all the servers in preparation for the next section.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e606"></a>3.3.2.&nbsp;Creating Partitioned Regions</h3></div></div></div><p>In this section, you will use the Customer region and try out different partitioning
+        scenarios. You will be using three server instances this time so you can see the benefits of
+        partitioning with redundancy. </p><div class="orderedlist"><ol type="1"><li><p>Return to the <code class="filename">serverCache.xml</code> file and modify the
+                <code class="literal">Customer</code> region to set the region type to partitioned.</p></li><li><p>If you stopped the locator along with the servers in the prior section, re-start
+              the locator.</p></li><li><p>Start three servers, calling them <code class="literal">server1</code>,
+                <code class="literal">server2</code>, and <code class="literal">server3</code>. </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>If you specify the <code class="literal">--server-port=0</code> argument on each of
+                  these, the ports will be auto-assigned and registered with the locator.</p></td></tr></table></div></li><li><p>Run the <code class="classname">CustomerLoader</code> class to load 3 customers into the
+              distributed system.</p></li><li><p>You can observe the partitioning by issuing the following
+              command.</p><pre class="programlisting">gfsh&gt; show metrics --region=/Customer --member=server1 --categories=partition</pre><p>Note the reported values for <code class="literal">bucketCount</code>,
+                <code class="literal">primaryBucketCount</code> and <code class="literal">configuredRedundancy</code>.
+              You might try this for all three servers.</p></li><li><p>Now, stop all the servers (but not the locator).</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e667"></a>3.3.3.&nbsp;Partitioned Regions with Redundancy</h3></div></div></div><p>In the prior partitioned region configuration, if one of the servers stops for some
+        reason, all the data stored in that partition is lost. In this section, we'll address that
+        by adding a redundancy factor.</p><div class="orderedlist"><ol type="1"><li><p>Go back to the serverCache.xml file and modify the Customer region attributes to
+              add a redundancy of 1 (meaning there will be one primary and one redundant copy of
+              every entry). </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>You can either do this by modifying the region shortcut or by inserting a
+                    <code class="literal">partition-attributes</code> element and specifying this. However, in
+                  a later step, you'll add a recovery delay value so you may want to take the extra
+                  time to type in the <code class="literal">partition-attributes</code> element now.</p></td></tr></table></div></li><li><p>Save the file and re-start the servers. Re-run the
+                <code class="classname">CustomerLoader</code> class to re-load the customers.</p></li><li><p>Repeat the show metrics command to see what has changed with the updated
+              partitioned region configuration.</p></li><li><p>Now, stop <code class="literal">server3</code> and repeat the <span><strong class="command">show
+                metrics</strong></span> command for the remaining two servers. You'll notice that the
+                <code class="literal">primaryBucketCount</code> value will have increased from 1 to 2
+              indicating that one of the redundant copies was promoted. Notice also that
+                <code class="literal">numBucketsWithoutRedundancy</code> is not 0. This indicates that when
+              the server was lost, the redundant bucket was promoted redundancy was not
+              re-established for this or any redundant buckets that were on that server.</p></li><li><p>You can obtain even more detail using the special
+                <code class="classname">PRBFunction</code> that has been registered with this project. To
+              make use of this functionality, run the <code class="classname">PRBFunctionExecutor</code>
+              program found under the <code class="filename">com.gopivotal.training.prb</code> package in the
+              STS. You'll see that a very extensive output is printed that displays every primary
+              bucket and every redundant bucket for each server. You can see by which ones have a
+              size &gt; 0 the buckets that have entries. You should see output similar to the following
+              for every
+              server.</p><pre class="programlisting">Member: HostMachine(server2:77234)&lt;v2&gt;:58224
+	Primary buckets:
+		Row=1, BucketId=2, Bytes=0, Size=0
+		Row=2, BucketId=4, Bytes=0, Size=0
+		Row=3, BucketId=9, Bytes=0, Size=0
+		Row=4, BucketId=12, Bytes=0, Size=0
+		Row=5, BucketId=13, Bytes=0, Size=0
+             ....
+		Row=20, BucketId=60, Bytes=0, Size=0
+		Row=21, BucketId=61, Bytes=676, Size=1</pre></li><li><p>Stop the servers once again</p></li></ol></div><p>Congratulations!! You have completed this lab.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e728"></a>3.3.4.&nbsp;Partitioned Regions with Redundancy and Recovery Delay</h3></div></div></div><p>This time, you will add a recovery delay so that after a period of time, redundancy will
+        be re-established. This will address the issue identified in the prior section.</p><div class="orderedlist"><ol type="1"><li><p>Go back to the <code class="filename">serverCache.xml</code> file and modify the
+              partition-attributes element to define a recovery delay of 5 seconds.  </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>If you used a region shortcut in the prior section, you'll need to add a
+                  partition-attributes element inside the region-attributes element for the
+                    <code class="literal">Customer</code> region</p></td></tr></table></div></li><li><p>Save the file and re-start  all the servers. Re-run the
+                <code class="classname">CustomerLoader</code> class to re-load the customers.</p></li><li><p>Now, stop <code class="literal">server3</code> and repeat the <span><strong class="command">show
+                metrics</strong></span> command for the remaining two servers. If you run this command
+              within 5 seconds of stopping <code class="literal">server3</code>, you'll likely see the
+                <code class="literal">numBucketsWithoutRedundancy</code> is still not 0. Wait a few more
+              seconds and repeat the command. You should see that this value will be returned to 0.
+              This indicates that redundancy has been re-established within the remaining
+              servers.</p></li><li><p>Alternatively, you can use the <code class="classname">PRBFunctionExecutor</code> class to
+              print out more detailed bucket listing as outlined in the prior section.</p></li><li><p>Stop the servers for the final time. Also stop the locator.</p></li></ol></div><p>Congratulations!! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="server-configuration-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="gfsh-session-lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;2.&nbsp;Server Configuration&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;4.&nbsp;gfsh practice</td></tr></table></div></body></html>

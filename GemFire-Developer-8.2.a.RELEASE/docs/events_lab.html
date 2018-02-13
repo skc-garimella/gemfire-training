@@ -1,0 +1,94 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;10.&nbsp;Handling Events on the Client</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="server-events-lab.html" title="Chapter&nbsp;9.&nbsp;Server Side Event Handling"><link rel="next" href="data-serialization-lab.html" title="Chapter&nbsp;11.&nbsp;Data Serialization"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="events_lab"></a>Chapter&nbsp;10.&nbsp;Handling Events on the Client</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="event-lab-introduction"></a>10.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience working with event handling in a GemFire
+      client cache. In addition, you will gain experience writing a continuous query, which will
+      give you a chance to blend OQL concepts with event processing concepts.</p><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Writing &amp; registering a cache listener</p></li><li><p>Registering interest in events related to certain keys</p></li><li><p>Writing a continuous query event handler</p></li><li><p>Submitting a continuous query</p></li></ul></div><p><span class="bold"><strong>Estimated completion time:</strong></span> 40 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="event-lab-quick-instructions"></a>10.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="event-lab-detailed-instructions"></a>10.3.&nbsp;Instructions</h2></div></div></div><p>This lab is broken into two key sections. The first will involve writing and registering a
+      cache listener. The second section will focus on using a continuous query.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2531"></a>10.3.1.&nbsp;Using a CacheListener</h3></div></div></div><p>In this section, you will be writing and registering a cache listener attached to your
+        client cache. To understand this part of the lab, let's outline the components that will be
+        involved.</p><p>This solution is made up of two components:</p><div class="itemizedlist"><ul type="disc"><li><p>One worker client that retrieves and adds data in its cache</p></li><li><p>One consumer client, which receives events from the cacheserver</p></li></ul></div><p>The consumer client registers interest in some or all keys in the data region. The
+        worker client updates its cache, and the updates are automatically forwarded to the
+        cacheserver. The server forwards to the consumer only those events in which the consumer has
+        registered interest.</p><div class="mediaobject"><img src="images/client_event_arch.png"></div><p>The consumer client has an asynchronous listener that reports local cache activity to
+        standard out, so you can see what is happening.  Note that while the ClientWorker could
+        receive similar events, it hasn't registered interest or configured a CacheListener so
+        events will only be sent to the ClientConsumer.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2554"></a>10.3.1.1.&nbsp;Implementing a CacheListener </h4></div></div></div><p>First, you will implement a CacheListener that will log all create events. Perform the
+          following steps.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) Open the
+                  <code class="classname">LoggingCacheListener</code> class in the
+                  <code class="filename">com.gopivotal.bookshop.buslogic</code> package (under
+                  <code class="filename">src/main/java</code>).  Notice that this class extends the
+                  <code class="classname">CacheListenerAdapter</code> class, which means that it doesn't
+                have to implement all the methods defined by the
+                  <code class="classname">CacheListener</code> interface. This way, you only have to
+                implement (override) the methods you are interested in for the events you want to
+                log.</p><p>Locate the <code class="code">init()</code> method and implement the functionality to extract
+                a property named 'filename' to a String. Then, use this value to call
+                  <code class="code">initializeLogger()</code> to set up the logger to point to this file.</p></li><li><p>(<code class="literal">TODO-02</code>) Next, locate the afterCreate() method. Implement
+                this method to log an info type message using the logger class attribute. In the log
+                message, include both the key and new value.  Optionally, implement the other
+                methods defined by the CacheListener to log additional events of interest (ex when
+                an entry is updated or deleted).</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Refer to the JavaDocs for the <code class="classname">CacheListener</code> interface
+                    as well as the <code class="classname">EntryEvent</code> classes to determine the
+                    correct methods to invoke.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-03</code>) Next, open the
+                  <code class="filename">clientConsumerCache.xml</code> file and modify the pool definition
+                to ensure that subscriptions are enabled.</p></li><li><p>(<code class="literal">TODO-04</code>) Finally, locate the BookMaster region definition
+                and modify the region configuration to register this
+                  <code class="filename">LoggingCacheListener</code> class as a cache listener. Be sure to
+                also specify the parameter to represent the 'filename' property.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2622"></a>10.3.1.2.&nbsp;Registering Interest in ClientConsumer</h4></div></div></div><p>Registering interest is simply a matter of obtaining a reference the appropriate
+          region and invoking <code class="code">registerInterest()</code> with the desired key or keys.</p><p>(<code class="literal">TODO-05</code>) Open the <code class="classname">ClientConsumer</code> class (in
+          the <code class="filename">com.gopivotal.bookshop.buslogic</code> package) and locate the line
+          marked with the <code class="literal">TODO</code> item. Make the appropriate call to the
+            <code class="classname">BookMaster</code> region instance to register interest in entries with
+          key <code class="literal">999</code>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2650"></a>10.3.1.3.&nbsp;Running ClientWorker and ClientConsumer</h4></div></div></div><p>In order to test the behavior you just implemented, it will be necessary to run both
+          the ClientConsumer and ClientWorker in the following way.</p><div class="orderedlist"><ol type="1"><li><p>First, make sure you have started the server side processes using the
+                  <code class="literal">startServer.sh</code> script (<code class="literal">startServer.bat</code> for
+                Windows) in the <code class="filename">server-bootstrap/scripts</code> lab folder. </p></li><li><p>Run the ClientConsumer by either locating the class in the Package Explorer or
+                in an editor tab. Right mouse click on the file or in the editor and select Run As
+                -&gt; Java Application. You will see output to the console indicating when the
+                application has started and is ready for the other application to run.</p></li><li><p>Next, run the ClientWorker by either locating the class in the Package Explorer
+                or in an editor tab. Right mouse click on the file or in the editor and select Run
+                As -&gt; Java Application. This application will run to a certain point. You should see
+                the following in the console
+                output.</p><pre class="programlisting">Connecting to the distributed system and creating the cache.
+Note the other client's region listener in response to these gets.
+Press Enter to continue.</pre><p>Place your cursor in the console and press Enter. At this point, the program
+                will continue with inserting and then destroying an entry with key 999.</p></li><li><p>Switch back to the console for ClientConsumer. Refer to the illustration below
+                to see how this is done.</p><div class="mediaobject"><img src="images/console_output.jpg"></div><p>On the ClientConsumer console output, you should see entries that indicate that
+                an entry was inserted per the logger. The exact output may differ from the above but
+                should be based on how you wrote the logging message in your
+                LoggingCacheListener.</p></li></ol></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2688"></a>10.3.2.&nbsp;Using a Continuous Query</h3></div></div></div><p>In this next section, you will be combining your understanding of event processing with
+        the prior experience gained with OQL style queries. This will involve implementing a
+        CQListener to handle Continuous Query events and writing the necessary code to register the
+        listener for a specific query.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-06</code>) Open the <code class="classname">SimpleCQListener</code>
+              class and implement the code of the <code class="methodname">onEvent()</code> method. Write
+              code to print out the various values of the <code class="classname">CqEvent</code> object that
+              is passed in.</p></li><li><p>Next, open the CQClient class and locate the registerCq() method. Perform the
+              following steps to set up and register the continuous query.</p><div class="orderedlist"><ol type="a"><li><p>(<code class="literal">TODO-07</code>) Use the pool instance to get a QueryService
+                    instance</p></li><li><p>(<code class="literal">TODO-08</code>) Use the QueryService to create a CqAttributes
+                    instance, registering the SimpleCQListener class created in the prior
+                    step.</p></li><li><p>(<code class="literal">TODO-09</code>) Write a query to trigger an event when a
+                    BookOrder is created having a totalPrice greater than $100.</p></li><li><p>(<code class="literal">TODO-10</code>) Using the CqAttributes you created and the
+                    query you wrote, create a new CqQuery and then execute it. If you decide to
+                    execute with initial results, capture the results and iterate over them,
+                    printing out the orders.</p></li></ol></div></li><li><p>Finally, test out your implementation</p><div class="orderedlist"><ol type="a"><li><p>Start by running the <code class="classname">CQClient</code> class. Right mouse
+                    click on the file or in the editor and select <code class="literal">Run As -&gt; Java
+                      Application</code>. This application will run to a certain point. You
+                    should see the following in the console
+                    output.</p><pre class="programlisting">Made new CQ Service
+Press enter to end</pre></li><li><p>Next, locate the <code class="classname">DataProducer</code> class and run using a
+                    similar approach as the prior step. You will see the following
+                    output.</p><pre class="programlisting">Press enter to populate an order over $100</pre><p>Place your cursor in the console and hit <code class="literal">Enter</code>. This will
+                    cause the <code class="literal">DataProducer</code> to insert an order for $100, which
+                    should trigger the <code class="classname">CQListener</code>. As a result, you should
+                    see the console switch back to the CQClient app and display whatever output you
+                    defined when implementing the <code class="methodname">onEvent()</code> method of the
+                      <code class="classname">SimpleCQListener</code> class.</p></li><li><p>Use the technique you used above in Running ClientWorker and ClientConsumer
+                    to switch back to the <code class="literal">DataProducer</code> program that is still
+                    running. Place your cursor in the console area again and hit
+                      <code class="literal">Enter</code>. This will insert a BookOrder for a total price less
+                    that $100. Therefore, you should see no additional output from the
+                      <code class="classname">SimpleCQListener</code>.</p></li><li><p>At this point, the <code class="literal">DataProducer</code> app has terminated.
+                    Switch back to the console for the <code class="literal">CQClient</code>. First verify no
+                    additional output was generated. Then, place your cursor in the console area and
+                    hit <code class="literal">Enter</code> to cause this application to end.</p></li></ol></div></li></ol></div><p>Congratulations! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="server-events-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="data-serialization-lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;9.&nbsp;Server Side Event Handling&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;11.&nbsp;Data Serialization</td></tr></table></div></body></html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client-cache
+		xmlns="http://schema.pivotal.io/gemfire/cache"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+		version="8.1">
+	<pool name="client" subscription-enabled="true">
+		<locator host="localhost" port="41111"/>
+	</pool>
+	<!-- TODO-05: the appropriate configuration to ensure that PDX serialization is being used and that
+	              you are using the ReflectionBasedAutoSerializer. Also be sure to register classes to 
+	              de-serialize  -->
+	<!-- TODO-11: Set the attribute to the pdx tag to force the client to not de-serialize objects -->
+	
+	<region name="Customer" >
+		<region-attributes refid="PROXY"/>
+	</region>
+</client-cache>

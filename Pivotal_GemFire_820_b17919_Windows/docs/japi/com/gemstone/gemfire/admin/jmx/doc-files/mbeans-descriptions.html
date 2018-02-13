@@ -1,0 +1,2249 @@
+<HTML>
+<HEAD>
+<TITLE>GemFire MBeans Interface</TITLE>
+</HEAD>
+
+<h1>GemFire Management Beans</h1>
+
+<P>This document describes the attributes, operations,
+and notifications of the GemFire Administration
+Management Beans (MBeans).</P>
+
+<h2><b>GemFireAgent</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">logFileSizeLimit</td>
+  <td>int</td>
+  <td>The maximum size of the JMX Agent log file; a value (in megabytes) in the range 0..1000000.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">logDiskSpaceLimit</td>
+  <td>int</td>
+  <td>The maximum disk space to allocate for logging; a value (in megabytes) in the range 0..1000000.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">logFile</td>
+  <td>java.lang.String</td>
+  <td>The name and path of this Agent's log file.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">logLevel</td>
+  <td>java.lang.String</td>
+  <td>A keyword or integer that defines the minimum level of alerts to be written to the log - for example, only those alerts that are at level WARNING or higher.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">autoConnect</td>
+  <td>boolean</td>
+  <td>If true, the JMX Agent will automatically connect to the distributed system when the Agent is started. The distributed system is specified by the following arguments: mcast-port, mcast-address, locators, remote-command. You can specify these arguments on the agent command line or in the Agent properties file.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">connected</td>
+  <td>boolean</td>
+  <td>True if this Agent is connected to a distributed system.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">propertyFile</td>
+  <td>java.lang.String</td>
+  <td>Name and path of this Agent's properties file. Identical to the argument on the agent command line.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">version</td>
+  <td>java.lang.String</td>
+  <td>The Agent's version.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">systemId</td>
+  <td>java.lang.String</td>
+  <td>A string that describes the associated distributed system.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">mcastAddress</td>
+  <td>java.lang.String</td>
+  <td>Multicast address of the associated distributed system.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">mcastPort</td>
+  <td>int</td>
+  <td>Multicast port of the associated distributed system.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">locators</td>
+  <td>java.lang.String</td>
+  <td>List of locators for connecting to the distributed system. Each locator is uniquely identified by the host on which it is running and the port on which it is listening.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">membershipPortRange</td>
+  <td>java.lang.String</td>
+  <td>The allowed range of UDP ports for use in forming an unique membership identifier.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">bindAddress</td>
+  <td>java.lang.String</td>
+  <td>An IP address that the JMX Agent uses to communicate with members of the distributed system. On a multi-homed host - a machine with multiple network cards - you must explicitly specify the bind address.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">sslEnabled</td>
+  <td>boolean</td>
+  <td>Indicates whether to use the Secure Sockets Layer (SSL) protocol for communication between members of this distributed system. Valid values are "true" and "false". A "true" setting requires the use of locators.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">sslProtocols</td>
+  <td>java.lang.String</td>
+  <td>A space-separated list of the valid SSL protocols for this connection. You can specify "any" to use any protocol that is enabled by default in the configured Java Secure Sockets Extension (JSSE) provider.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">sslCiphers</td>
+  <td>java.lang.String</td>
+  <td>A space-separated list of the valid SSL ciphers for this connection. You can specify "any" to use any ciphers that are enabled by default in the configured JSSE provider.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">sslAuthenticationRequired</td>
+  <td>boolean</td>
+  <td>Indicates whether to require SSL authentication for communication between members of the distributed system. Valid values are "true" and "false".</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">sslProperties</td>
+  <td>java.util.Properties</td>
+  <td>The SSL vendor properties to use for the distributed system.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">addSSLProperty</td>
+  <td>void</td>
+  <td colspan="2">Add an SSL vendor property with the specified key and value.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>key</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Property key</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>value</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Property value</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">removeSSLProperty</td>
+  <td>void</td>
+  <td colspan="2">Remove the specified SSL vendor property.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>key</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Property key</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLog</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Display the tail of the Agent's log file.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">stop</td>
+  <td>void</td>
+  <td colspan="2">Stop the Agent after closing all managed resources</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">saveProperties</td>
+  <td>void</td>
+  <td colspan="2">Persist the Agent's current configuration to its properties file</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">connectToSystem</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Connect to the distributed system described by this Agent. Returns the ObjectName of the corresponding DistributedSystem MBean.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">disconnectFromSystem</td>
+  <td>void</td>
+  <td colspan="2">Disconnect from the currently connected distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageDistributedSystem</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Return the ObjectName of the currently connected distributed system. If not connected, return null.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>AdminDistributedSystem</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">id</td>
+  <td>java.lang.String</td>
+  <td>A string that uniquely identifies this distributed system.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">systemName</td>
+  <td>java.lang.String</td>
+  <td>Display name of the distributed system</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">remoteCommand</td>
+  <td>java.lang.String</td>
+  <td>A default remote command prefix to use for command invocation on remote machines.</td>
+  <td>null</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">alertLevel</td>
+  <td>java.lang.String</td>
+  <td>Minimum level for alerts to be delivered to listeners. Should be one of: WARNING, ERROR, SEVERE, OFF. It is not case-sensitive.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">mcastAddress</td>
+  <td>java.lang.String</td>
+  <td>Multicast address of this distributed system.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">mcastPort</td>
+  <td>int</td>
+  <td>Multicast port of this distributed system.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">locators</td>
+  <td>java.lang.String</td>
+  <td>List of locators for connecting to this distributed system. Each locator is uniquely identified by the host on which it is running and the port on which it is listening.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">membershipPortRange</td>
+  <td>java.lang.String</td>
+  <td>The allowed range of UDP ports for use in forming an unique membership identifier.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshIntervalForStatAlerts</td>
+  <td>int</td>
+  <td>The interval (in seconds) between auto-polling for checking whether the Stat has exceeded a threshold for which the Stat Alert Definition is defined.</td>
+  <td>null</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshInterval</td>
+  <td>int</td>
+  <td>The interval (in seconds) between auto-polling for updating AdminDistributedSystem constituents including SystemMember and StatisticResource. This applies only to the default interval set when the resource is created. This interval is read-only and retains the value set when the Agent config is created</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">canPersistStatAlertDefs</td>
+  <td>boolean</td>
+  <td>Indicates whether Statistics Alert definitions could be persisted across runs/sessions of the JMX Agent.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">missingPersistentMembers</td>
+  <td>javax.management.openmbean.TabularData</td>
+  <td>Retrieve the set of persistent files that the existing members are waiting for.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Notifications and Fields</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.member.joined</td>
+  <td colspan="3">A GemFire manager, cache, or other member has joined this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.member.joined</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.member.left</td>
+  <td colspan="3">A GemFire manager, cache, or other member has left the distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.member.left</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.member.crashed</td>
+  <td colspan="3">A member of this distributed system has crashed instead of leaving cleanly.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.member.crashed</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">4</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.alert</td>
+  <td colspan="3">A member of this distributed system has generated an alert.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.alert</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">0</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">waitToBeConnected</td>
+  <td>boolean</td>
+  <td colspan="2">Wait for the connection to the distributed system to be established</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>timeout</td>
+  <td>long</td>
+  <td colspan="2">Number of milliseconds to wait to be connected</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">start</td>
+  <td>void</td>
+  <td colspan="2">Start all locators defined for this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">stop</td>
+  <td>void</td>
+  <td colspan="2">Stop all locators defined for this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageDistributionLocator</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Creates a new distribution locator that is ready to configure and start</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageDistributionLocators</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Return an array of JMX ObjectNames for all locators known to this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCacheVm</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Create a new CacheVm MBean (that is, make this distributed system aware of a cache server that has not been started ).</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCacheVms</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Return an array of JMX ObjectNames for all cache vms known to this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCacheServer</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Create a new CacheVm MBean (that is, make this distributed system aware of a cache vm that has not been started ). This action is deprecated as of 5.7 use manageCacheVm instead.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCacheServers</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Return an array of JMX ObjectNames for all cache vms known to this distributed system. This action is deprecated as of 5.7 use manageCacheVm instead.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageSystemMemberApplications</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Return an array of JMX ObjectNames for all applications that are members of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">monitorGemFireHealth</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Return the ObjectName for the GemFireHealth MBean.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">displayMergedLogs</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Combine the tails of all system members' logs into a merged log, with the entries ordered by timestamp.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLicense</td>
+  <td>java.util.Properties</td>
+  <td colspan="2">Display GemFire licensing information.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLatestAlert</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Display the most recent system alert.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">createDistributionLocator</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Create a DistributionLocator MBean. The parameters specify the locator's host machine, the port on which it listens, the working directory hosting the locator, and product directory used by the locator.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>host</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Host machine for the Locator</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>port</td>
+  <td>int</td>
+  <td colspan="2">Port for the Locator to listen on</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>workingDirectory</td>
+  <td>java.lang.String</td>
+  <td colspan="2">The working directory hosting the Locator</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>productDirectory</td>
+  <td>java.lang.String</td>
+  <td colspan="2">The GemFire product directory used by the Locator</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageSystemMember</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Return the ObjectName for the SystemMemberMBean representing the specified distributed member or null if the member is not found.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>distributedMember</td>
+  <td>com.gemstone.gemfire.distributed.DistributedMember</td>
+  <td colspan="2">The distributed member to manage</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getAllStatAlertDefinitions</td>
+  <td>[Lcom.gemstone.gemfire.internal.admin.StatAlertDefinition;</td>
+  <td colspan="2">Return an array of all available Stat Alert Definitions objects.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">updateAlertDefinition</td>
+  <td>void</td>
+  <td colspan="2">Update/Add an Admin Stat Alert Definition to the Aggregator. Sends the updated definition to all the Managers/Members.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>alertDefinition</td>
+  <td>com.gemstone.gemfire.internal.admin.StatAlertDefinition</td>
+  <td colspan="2">The Admin Stat Alert Definition to be updated/added to the Aggregator</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">removeAlertDefinition</td>
+  <td>void</td>
+  <td colspan="2">Remove an Admin Stat Alert Definition from the Aggregator and all the Managers/Members.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>defId</td>
+  <td>java.lang.Integer</td>
+  <td colspan="2">The unique id of the Admin Stat Alert Definition to be removed from the Aggregator</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">isAlertDefinitionCreated</td>
+  <td>boolean</td>
+  <td colspan="2">Check whether the alert definition is already created.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>alertDefinition</td>
+  <td>com.gemstone.gemfire.internal.admin.StatAlertDefinition</td>
+  <td colspan="2">The Admin Stat Alert Definition to be checked</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">revokePersistentMember</td>
+  <td>void</td>
+  <td colspan="2">Indicate to the distributed system that persistent files have been lost.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>host</td>
+  <td>java.lang.String</td>
+  <td colspan="2">The host of the members to revoke. If null, it will match all hosts</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>directory</td>
+  <td>java.lang.String</td>
+  <td colspan="2">The directory on the members to revoke. If null, it will match all directories</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">shutDownAllMembers</td>
+  <td>java.util.Set</td>
+  <td colspan="2">Shutting down all members with cache in the distributed system gracefully.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">shutDownAllMembers</td>
+  <td>java.util.Set</td>
+  <td colspan="2">Shutting down all members with cache in the distributed system gracefully.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>timeout</td>
+  <td>long</td>
+  <td colspan="2">The amount of time to wait (in milliseconds) for the shutdown all to complete.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>SystemMember</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">id</td>
+  <td>java.lang.String</td>
+  <td>A string that uniquely identifies the application within the distributed system.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">name</td>
+  <td>java.lang.String</td>
+  <td>The application-defined member name.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">host</td>
+  <td>java.lang.String</td>
+  <td>The host machine on which this application is running.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshInterval</td>
+  <td>int</td>
+  <td>The interval (in seconds) between auto-refreshes of this application;s configuration attributes, as defined in the gemfire.properties file. To disable the JMX Timer service's auto-refresh feature, set this attribute to zero or less. Effective 6.0, any changes to this parameter wil not affect the current refreshInterval. To change the refreshInterval use AdminDistributedSystem.refreshInterval</td>
+  <td>null</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">version</td>
+  <td>java.lang.String</td>
+  <td>Display GemFire version information.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">hasCache</td>
+  <td>boolean</td>
+  <td>Does the system member host a GemFire Cache?</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">distributedMember</td>
+  <td>com.gemstone.gemfire.distributed.DistributedMember</td>
+  <td>Distributed membership identity.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Notifications and Fields</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.created</td>
+  <td colspan="3">A cache got created on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.created</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.closed</td>
+  <td colspan="3">A cache is closed on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.closed</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.region.created</td>
+  <td colspan="3">A region is created in a cache on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.region.created</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.region.lost</td>
+  <td colspan="3">A region was removed from a cache on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.region.lost</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.client.joined</td>
+  <td colspan="3">A cache client established a connection with a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.client.joined</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.client.left</td>
+  <td colspan="3">A cache client gracefully closed a connection with a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.client.left</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.client.crashed</td>
+  <td colspan="3">A cache client crashed and abruptly lost connection with a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.client.crashed</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getRoles</td>
+  <td>[Ljava.lang.String;</td>
+  <td colspan="2">Get the membership roles filled by this member.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLog</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Display the main log for this system member.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLicense</td>
+  <td>java.util.Properties</td>
+  <td colspan="2">Display GemFire licensing information.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCache</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Create a SystemMemberCache MBean for this application.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageStats</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Create a StatisticResource MBean for each statistic resource in this member.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageStat</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Create a StatisticResource MBean for each statistic resource in this member, given the underlying Statistics Type name.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>statisticsTypeName</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Name of the underlying Statistics Type eg. DistributionStats</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshConfig</td>
+  <td>void</td>
+  <td colspan="2">Refresh configuration attributes for this application, using the gemfire.properties file.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getConfiguration</td>
+  <td>[Lcom.gemstone.gemfire.admin.ConfigurationParameter;</td>
+  <td colspan="2">Returns the current configuration attributes for this application, using the gemfire.properties file.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>StatisticResource</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">name</td>
+  <td>java.lang.String</td>
+  <td>The JMX ObjectName of this statistic resource.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">description</td>
+  <td>java.lang.String</td>
+  <td>Description of this statistic resource.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">type</td>
+  <td>java.lang.String</td>
+  <td>Classification type of this statistic resource.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">owner</td>
+  <td>java.lang.String</td>
+  <td>Name of the source process.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshInterval</td>
+  <td>int</td>
+  <td>The interval (in seconds) between auto-refreshes of statistical information. To turn off the JMX Timer service's auto-refresh feature, set this attribute to zero or less. If you're concerned about system performance, leave this set to zero. Effective 6.0, any changes to this parameter wil not affect the current refreshInterval. To change the refreshInterval use AdminDistributedSystem.refreshInterval</td>
+  <td>null</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refresh</td>
+  <td>void</td>
+  <td colspan="2">Refresh values of statistics.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getStatistics</td>
+  <td>[Lcom.gemstone.gemfire.admin.Statistic;</td>
+  <td colspan="2">Returns a current snapshot of statistics.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>DistributionLocator</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">id</td>
+  <td>java.lang.String</td>
+  <td>Id of the distribution locator.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">host</td>
+  <td>java.lang.String</td>
+  <td>The host machine on which this locator is running.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">workingDirectory</td>
+  <td>java.lang.String</td>
+  <td>The current working directory of the locator.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">productDirectory</td>
+  <td>java.lang.String</td>
+  <td>The location of the GemFire installation used to run this locator.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">port</td>
+  <td>int</td>
+  <td>The port on which this locator is listening: a value in the range 0..65535.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">bindAddress</td>
+  <td>java.lang.String</td>
+  <td>The interface address to which the locator binds.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">running</td>
+  <td>boolean</td>
+  <td>True if this locator is running.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">start</td>
+  <td>void</td>
+  <td colspan="2">Start this distribution locator.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">waitToStart</td>
+  <td>boolean</td>
+  <td colspan="2">Wait for the distribution locator to start</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>timeout</td>
+  <td>long</td>
+  <td colspan="2">Number of milliseconds to wait to start</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">waitToStop</td>
+  <td>boolean</td>
+  <td colspan="2">Wait for the distribution locator to stop</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>timeout</td>
+  <td>long</td>
+  <td colspan="2">Number of milliseconds to wait to stop</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">stop</td>
+  <td>void</td>
+  <td colspan="2">Stop this distribution locator.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLog</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Display the tail of the locator service's log.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">remove</td>
+  <td>void</td>
+  <td colspan="2">Remove this distribution locator.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>SystemMemberCache</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">name</td>
+  <td>java.lang.String</td>
+  <td>The name of the Cache</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">closed</td>
+  <td>boolean</td>
+  <td>True if this cache has been closed.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">lockTimeout</td>
+  <td>int</td>
+  <td>Seconds that a cache operation will wait to obtain a distributed lock lease.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">lockLease</td>
+  <td>int</td>
+  <td>The length, in seconds, of distributed lock leases obtained by this cache.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">searchTimeout</td>
+  <td>int</td>
+  <td>Seconds that a cache get operation can spend searching for a value before it times out.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">upTime</td>
+  <td>int</td>
+  <td>Seconds that this cache has been open.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">rootRegionNames</td>
+  <td>java.util.Set</td>
+  <td>A set of the names of each root region currently in this cache.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">server</td>
+  <td>boolean</td>
+  <td>Is this a cache server?</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getSnapshot</td>
+  <td>com.gemstone.gemfire.admin.GemFireMemberStatus</td>
+  <td colspan="2">Get Member Cache Status</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getRegionSnapshot</td>
+  <td>com.gemstone.gemfire.admin.RegionSubRegionSnapshot</td>
+  <td colspan="2">Get Member Cache's Region Snapshot</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageRegion</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Creates a SystemMemberRegion MBean for the region with the specified path.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>path</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Full path of region to create an mbean for.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getStatistics</td>
+  <td>[Lcom.gemstone.gemfire.admin.Statistic;</td>
+  <td colspan="2">Returns a current snapshot of cache statistics.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refresh</td>
+  <td>void</td>
+  <td colspan="2">Updates each attribute in this MBean.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageBridgeServer</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Creates a new, unstarted bridge server for the cache. Deprecated as of 5.7 use manageCacheServer instead.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageBridgeServers</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Returns the names of the MBeans for the cache's bridge servers. Deprecated as of 5.7 use manageCacheServer instead.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCacheServer</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Creates a new, unstarted cache server for the cache</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCacheServers</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Returns the names of the MBeans for the cache's cache servers</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>SystemMemberRegion</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">name</td>
+  <td>java.lang.String</td>
+  <td>The name (not the full-path) of this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">fullPath</td>
+  <td>java.lang.String</td>
+  <td>The full path name of this region</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">userAttribute</td>
+  <td>java.lang.String</td>
+  <td>Description of the region's user attribute object.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">cacheLoader</td>
+  <td>java.lang.String</td>
+  <td>Description of the region's cache loader.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">cacheWriter</td>
+  <td>java.lang.String</td>
+  <td>Description of the region's cache writer.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">evictionAttributes</td>
+  <td>com.gemstone.gemfire.cache.EvictionAttributes</td>
+  <td>Description of the region's eviction attributes.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">cacheListener</td>
+  <td>java.lang.String</td>
+  <td>Description of the region's cache listener. This attribute is deprecated as of 6.0. Use getCacheListeners method instead.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">keyConstraint</td>
+  <td>java.lang.String</td>
+  <td>Name of the class that keys in this region are constrained to be</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">regionTimeToLiveTimeLimit</td>
+  <td>int</td>
+  <td>This region's time to live time limit.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">regionTimeToLiveAction</td>
+  <td>java.lang.Object</td>
+  <td>This region's time to live action.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">entryTimeToLiveTimeLimit</td>
+  <td>int</td>
+  <td>This region's entry time to live time limit.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">entryTimeToLiveAction</td>
+  <td>java.lang.Object</td>
+  <td>This region's entry time to live action.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">regionIdleTimeoutTimeLimit</td>
+  <td>int</td>
+  <td>This region's idle timeout time limit.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">regionIdleTimeoutAction</td>
+  <td>java.lang.Object</td>
+  <td>This region's idle timeout action.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">entryIdleTimeoutTimeLimit</td>
+  <td>int</td>
+  <td>This region's entry idle timeout time limit.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">entryIdleTimeoutAction</td>
+  <td>java.lang.Object</td>
+  <td>This region's entry idle timeout action.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">mirrorType</td>
+  <td>java.lang.Object</td>
+  <td>This region's mirror type.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">dataPolicy</td>
+  <td>java.lang.Object</td>
+  <td>This region's data policy.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">scope</td>
+  <td>java.lang.Object</td>
+  <td>This region's scope.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">initialCapacity</td>
+  <td>int</td>
+  <td>This region's initial capacity.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">loadFactor</td>
+  <td>float</td>
+  <td>This region's load factor.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">concurrencyLevel</td>
+  <td>int</td>
+  <td>This region's concurrency level.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">statisticsEnabled</td>
+  <td>boolean</td>
+  <td>True if statistics are enabled on this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">persistBackup</td>
+  <td>boolean</td>
+  <td>true if the contents of the region are persisted to disk</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">earlyAck</td>
+  <td>boolean</td>
+  <td>false if ack is sent after processing update; true if sent early</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">diskWriteAttributes</td>
+  <td>com.gemstone.gemfire.cache.DiskWriteAttributes</td>
+  <td>Description of how the region's contents is written to disk </td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">diskDirs</td>
+  <td>[Ljava.io.File;</td>
+  <td>Directories to which the region's contents are written</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">entryCount</td>
+  <td>int</td>
+  <td>Number of entries in this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">subregionCount</td>
+  <td>int</td>
+  <td>Number of subregions in this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">lastModifiedTime</td>
+  <td>long</td>
+  <td>Last time an entry's value in this region or one of its subregions was modified.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">lastAccessedTime</td>
+  <td>long</td>
+  <td>Last time an entry in this region or one of its subregions was accessed.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">hitCount</td>
+  <td>long</td>
+  <td>Number of times that a get on this region found a local value.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">missCount</td>
+  <td>long</td>
+  <td>Number of times that a get on this region did not find a local value.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">hitRatio</td>
+  <td>float</td>
+  <td>Ratio of hits to total get calls.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">subregionNames</td>
+  <td>java.util.Set</td>
+  <td>A set of the names of each subregion of this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">subregionFullPaths</td>
+  <td>java.util.Set</td>
+  <td>A set of the full paths of each subregion of this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">membershipAttributes</td>
+  <td>com.gemstone.gemfire.cache.MembershipAttributes</td>
+  <td>Description of the region's membership attributes.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">subscriptionAttributes</td>
+  <td>com.gemstone.gemfire.cache.SubscriptionAttributes</td>
+  <td>Description of the region's subscription attributes.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">partitionAttributes</td>
+  <td>com.gemstone.gemfire.cache.PartitionAttributes</td>
+  <td>Description of the region's partition attributes.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">concurrencyChecksEnabled</td>
+  <td>boolean</td>
+  <td>True if concurrent modifications are handled on this region.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refresh</td>
+  <td>void</td>
+  <td colspan="2">Updates each attribute in this MBean.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getCacheListeners</td>
+  <td>[Ljava.lang.String;</td>
+  <td colspan="2">Descriptions of all CacheListeners on this region as a String array. If there are no cacheListeners defined on the region an empty array is returned.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>SystemMemberCacheServer</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">port</td>
+  <td>int</td>
+  <td>The port on which this cache server listens for clients.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">bindAddress</td>
+  <td>java.lang.String</td>
+  <td>The address on which this cache server listens for clients.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">hostnameForClients</td>
+  <td>java.lang.String</td>
+  <td>The host name or ip address that will be given to clients who discover this cache server</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">notifyBySubscription</td>
+  <td>boolean</td>
+  <td>Whether or not this cache server should notify clients based on key subscription.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">socketBufferSize</td>
+  <td>int</td>
+  <td>The socket buffer size in bytes for connections made by clients to this server.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maximumTimeBetweenPings</td>
+  <td>int</td>
+  <td>The maximum amount of time, in milliseconds, between pinging a client to determine its health.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxConnections</td>
+  <td>int</td>
+  <td>The maxium number of client connections allowed by this server.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxThreads</td>
+  <td>int</td>
+  <td>The maxium number of threads allowed in this server to service client requests.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maximumMessageCount</td>
+  <td>int</td>
+  <td>The maximum number of messages that can be enqueued in a client-queue on this server.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">messageTimeToLive</td>
+  <td>int</td>
+  <td>The time, in seconds, after which a message in a client-queue on this server will expire.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">groups</td>
+  <td>[Ljava.lang.String;</td>
+  <td>The list of server groups that this cache server belongs to.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">loadPollInterval</td>
+  <td>long</td>
+  <td>The period, in milliseconds, to test the load for this cache server using the load probe</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">loadProbe</td>
+  <td>java.lang.String</td>
+  <td>The period, in milliseconds, to test the load for this cache server using the load probe</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">running</td>
+  <td>boolean</td>
+  <td>True if cache server is running.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">start</td>
+  <td>void</td>
+  <td colspan="2">Starts the cache server.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">stop</td>
+  <td>void</td>
+  <td colspan="2">Stops the cache server.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refresh</td>
+  <td>void</td>
+  <td colspan="2">Updates each attribute in this MBean.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>CacheVm</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">id</td>
+  <td>java.lang.String</td>
+  <td>A string that uniquely identifies the cache vm.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">name</td>
+  <td>java.lang.String</td>
+  <td>The JMX ObjectName of this managed resource.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">host</td>
+  <td>java.lang.String</td>
+  <td>The host machine on which the cache vm is running.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshInterval</td>
+  <td>int</td>
+  <td>The interval (in seconds) between auto-refreshes of this application;s configuration attributes, as defined in the gemfire.properties file. To disable the JMX Timer service's auto-refresh feature, set this attribute to zero or less.</td>
+  <td>null</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">version</td>
+  <td>java.lang.String</td>
+  <td>Display GemFire version information.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">hasCache</td>
+  <td>boolean</td>
+  <td>Does the cache vm host a GemFire Cache?</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">distributedMember</td>
+  <td>com.gemstone.gemfire.distributed.DistributedMember</td>
+  <td>Distributed membership identity.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">productDirectory</td>
+  <td>java.lang.String</td>
+  <td>The location of the GemFire installation used to run this cache vm.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">workingDirectory</td>
+  <td>java.lang.String</td>
+  <td>The directory in which the cache vm was launched.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">running</td>
+  <td>boolean</td>
+  <td>True if this cache vm is running.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">cacheXMLFile</td>
+  <td>java.lang.String</td>
+  <td>The declarative caching file user to configure this cache vm.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">classPath</td>
+  <td>java.lang.String</td>
+  <td>Location(s) of user classes required by cache vm</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Notifications and Fields</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.created</td>
+  <td colspan="3">A cache got created on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.created</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.closed</td>
+  <td colspan="3">A cache is closed on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.closed</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.region.created</td>
+  <td colspan="3">A region is created in a cache on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.region.created</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.region.lost</td>
+  <td colspan="3">A region was removed from a cache on a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.region.lost</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.client.joined</td>
+  <td colspan="3">A cache client established a connection with a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.client.joined</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.client.left</td>
+  <td colspan="3">A cache client gracefully closed a connection with a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.client.left</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="3">gemfire.distributedsystem.cache.client.crashed</td>
+  <td colspan="3">A cache client crashed and abruptly lost connection with a member of this distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">name</td>
+  <td colspan="2">gemfire.distributedsystem.cache.client.crashed</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">severity</td>
+  <td colspan="2">6</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td colspan="2">descriptorType</td>
+  <td colspan="2">notification</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getRoles</td>
+  <td>[Ljava.lang.String;</td>
+  <td colspan="2">Get the membership roles filled by this member.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">start</td>
+  <td>void</td>
+  <td colspan="2">Start this cache vm.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">waitToStart</td>
+  <td>boolean</td>
+  <td colspan="2">Wait for the cache vm to start</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>timeout</td>
+  <td>long</td>
+  <td colspan="2">Number of milliseconds to wait to start</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">waitToStop</td>
+  <td>boolean</td>
+  <td colspan="2">Wait for the cache vm to stop</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>timeout</td>
+  <td>long</td>
+  <td colspan="2">Number of milliseconds to wait to stop</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">stop</td>
+  <td>void</td>
+  <td colspan="2">Stop this cache vm.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLog</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Display the log for this cache vm.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getLicense</td>
+  <td>java.util.Properties</td>
+  <td colspan="2">Display GemFire licensing information.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageCache</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Create a SystemMemberCache MBean for the cache in this cache vm.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageStats</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Create a StatisticResource MBean for each statistic resource in this member.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageStat</td>
+  <td>[Ljavax.management.ObjectName;</td>
+  <td colspan="2">Create a StatisticResource MBean for each statistic resource in this member, given the underlying Statistics Type name.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>statisticsTypeName</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Name of the underlying Statistics Type eg. DistributionStats</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">refreshConfig</td>
+  <td>void</td>
+  <td colspan="2">Refresh configuration attributes for this application, using the gemfire.properties file.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getConfiguration</td>
+  <td>[Lcom.gemstone.gemfire.admin.ConfigurationParameter;</td>
+  <td colspan="2">Returns the current configuration attributes for this application, using the gemfire.properties file.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>GemFireHealth</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">health</td>
+  <td>com.gemstone.gemfire.admin.GemFireHealth$Health</td>
+  <td>The overall health of the distributed system: Good, Okay, or Poor.</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">healthStatus</td>
+  <td>java.lang.String</td>
+  <td>The current status of the overall health of GemFire</td>
+  <td>false</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">resetHealth</td>
+  <td>void</td>
+  <td colspan="2">Resets the overall health of the distributed system to Good (optimal).</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">getDiagnosis</td>
+  <td>java.lang.String</td>
+  <td colspan="2">Returns a description of any causes of ill health in the distributed system.</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">manageGemFireHealthConfig</td>
+  <td>javax.management.ObjectName</td>
+  <td colspan="2">Registers a new GemFireHealthConfig MBean and returns its ObjectName</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td width="10"></td>
+  <td>host</td>
+  <td>java.lang.String</td>
+  <td colspan="2">The host to monitor the health of</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>DistributedSystemHealthConfig</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxDepartedApplications</td>
+  <td>long</td>
+  <td>The maximum number of system members that can unexpectedly leave a healthy distributed system.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">applyChanges</td>
+  <td>void</td>
+  <td colspan="2">Applies these configuration attributes to the GemFire health monitor.</td>
+</tr>
+</table>
+
+<P></P>
+
+<h2><b>GemFireHealthConfig</b> MBean</h2>
+<table border="0" cellpadding="3">
+<tr valign="top">
+  <th align="left">Description:</th>
+  <td colspan="4">GemFire distributed system</td>
+</tr>
+<tr valign="top">
+  <th align="left">Attributes</th>
+  <th align="left" colspan="2">Name</th>
+  <th align="left">Type</th>
+  <th align="left">Description</th>
+  <th align="left">Writable</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">healthEvaluationInterval</td>
+  <td>int</td>
+  <td>The number of seconds to wait between two health assessments of this distributed system.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxNetSearchTime</td>
+  <td>long</td>
+  <td>The maximum time (in milliseconds) that a netSearch operation can take before the cache member is considered to be unhealthy.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxLoadTime</td>
+  <td>long</td>
+  <td>The maximum time (in milliseconds) that a cache load operation can take before the cache member is considered to be unhealthy.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">minHitRatio</td>
+  <td>double</td>
+  <td>The minimum hit ratio in order for a cache member to be considered healthy.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxEventQueueSize</td>
+  <td>long</td>
+  <td>The maximum number of entries in the event delivery queue of a healthy cache member.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxVMProcessSize</td>
+  <td>long</td>
+  <td>The maximum process size (in megabytes) of a healthy member of the distributed system.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxMessageQueueSize</td>
+  <td>long</td>
+  <td>The maximum number of enqueued incoming or outgoing messages that a healthy member of a distributed system can have.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">maxReplyTimeouts</td>
+  <td>long</td>
+  <td>The maximum number of message replies that can time out in a healthy member.</td>
+  <td>true</td>
+</tr>
+<tr valign="top">
+  <th align="left" colspan="6">Operations and Parameters</th>
+</tr>
+<tr valign="top">
+  <td></td>
+  <td colspan="2">applyChanges</td>
+  <td>void</td>
+  <td colspan="2">Applies this configuration to the GemFire health monitor.</td>
+</tr>
+</table>
+
+<P></P>
+
+</HTML>

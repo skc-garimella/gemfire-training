@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO-05: Add cache configuration attribute to enable copy on read -->
+<cache
+    xmlns="http://schema.pivotal.io/gemfire/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+    version="8.1"
+    copy-on-read="true">
+    
+    	<!-- TODO-10: Register the LoggingTransactionListener -->
+    	<cache-transaction-manager>
+    		<transaction-listener>
+    			<class-name>com.gopivotal.bookshop.buslogic.LoggingTransactionListener</class-name>
+    		</transaction-listener>
+    	</cache-transaction-manager>
+    	
+        <region name="Customer">
+         <region-attributes data-policy="partition">
+            <partition-attributes total-num-buckets="7"/>
+            <cache-listener>
+            	<class-name>com.gopivotal.bookshop.buslogic.LoggingCacheListener</class-name>
+            </cache-listener>
+        </region-attributes>
+       </region>    
+       
+       <region name="Order">
+         <region-attributes data-policy="partition">
+         	<!-- TODO-06: Make appropriate configuration so that the Order region is co-located with Customer -->
+            <partition-attributes total-num-buckets="7" colocated-with="Customer"/>
+            <cache-listener>
+            	<class-name>com.gopivotal.bookshop.buslogic.LoggingCacheListener</class-name>
+            </cache-listener>
+        </region-attributes>
+       </region>  
+</cache>

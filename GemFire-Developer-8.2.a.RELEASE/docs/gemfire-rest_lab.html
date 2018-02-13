@@ -1,0 +1,78 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;16.&nbsp;Understanding REST Support in GemFire</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="spring-gemfire_lab.html" title="Chapter&nbsp;15.&nbsp;Spring GemFire"><link rel="next" href="eclipse.html" title="Appendix&nbsp;A.&nbsp;Eclipse Tips"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="gemfire-rest_lab"></a>Chapter&nbsp;16.&nbsp;Understanding REST Support in GemFire</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e4208"></a>16.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience working the REST support in GemFire.</p><p><span class="bold"><strong>What you will gain experience with</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Basic configuration process for enabling REST support in GemFire</p></li><li><p>Familiarity with the SwaggerUI as a way to understand what you can do with the REST
+            interface</p></li><li><p>Use Spring REST Template to interact with the REST service</p></li></ul></div><p><span class="bold"><strong>Estimated completion time:</strong></span> 30 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e4230"></a>16.2.&nbsp;Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e4235"></a>16.2.1.&nbsp;Configuring REST Support</h3></div></div></div><p>In this first section, you will perform the basic configuration steps necessary to fully
+        enable REST support in GemFire.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) Locate and open the
+                <code class="filename">serverCache.xml</code> file under the <code class="filename">xml</code> folder.
+              Add the necessary configuration to enable PDX Serialization. Additionally set the
+              configuration such that the server will NOT de-serialize objects when fetching and
+              returning them.</p></li><li><p>(<code class="literal">TODO-02</code>) Start a locator process followed by a server. For the
+              server, be sure to add the appropriate configuration items to enable REST support and
+              to use port <code class="literal">7071</code> as the HTTP port. Once done, run the
+                <code class="classname">OrderLoader</code> class in the
+                <code class="filename">com.gopivotal.bookshop.buslogic</code> package in
+                <code class="filename">src/main/java</code> folder. This will populate the
+                <code class="literal">BookOrder</code> region with a few entries.</p></li><li><p>(<code class="literal">TODO-03</code>) Finally, verify that you have correctly set up the
+              REST support by opening a browser to the following URL:
+                <code class="literal">http://localhost:7071/gemfire-api/v1</code>. If you have correctly
+              configured REST support, you should see something like the following.
+              <!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: center"><div xmlns="" class="figure"><a name="gemfire-rest-verification"></a><div class="figure-contents"><div class="mediaobject"><img src="images/verify_rest.jpg" alt="Using browser to verify REST service is properly configured"></div></div><p class="title"><b>Figure&nbsp;16.1.&nbsp;Using browser to verify REST service is properly configured</b></p></div><br xmlns="" class="figure-break"></div>
+          </p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e4292"></a>16.2.2.&nbsp;Using the Swagger UI</h3></div></div></div><p>In this next section, with the Swagger UI that is provided as part of the GemFire REST
+        support. This part of the lab won't involve any work with the IDE so we'll dispense with
+        using TODO steps for now.</p><div class="orderedlist"><ol type="1"><li><p>To begin, open your browser to the URL:
+                <code class="literal">http://localhost:7071/gemfire-api/docs</code>. This is the starting
+              point for the UI.</p></li><li><p>Click on the <code class="literal">functions</code>, <code class="literal">queries</code> and
+                <code class="literal">region</code> links to see the REST calls that can be made for each.
+              Notice, for example, that you can get a list of all functions by using the call to
+                <code class="literal">/v1/functions</code>. You can also try this call out by clicking the Try
+              it out button. Note the actual URL, which may be missing the hostname component. Also
+              notice the pattern for how the Swagger UI displays the URL and what the actual full
+              URL is. You will need to make use of this in future tasks.</p></li><li><p>Using the example provided by Swagger, see if you can formulate a URL call to
+              obtain a list of functions deployed and type that into the browser. You should see
+              something like the following.
+              <!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: left"><div xmlns="" class="figure"><a name="gemfire-functions-list"></a><div class="figure-contents"><div class="mediaobject"><img src="images/functions_list.jpg" alt="Sample return result from proper call to list functions"></div></div><p class="title"><b>Figure&nbsp;16.2.&nbsp;Sample return result from proper call to list functions</b></p></div><br xmlns="" class="figure-break"></div>
+           </p></li><li><p>Take a little time to experiment with the various interfaces related to queries
+              and regions. See if you can perform the following tasks - both from the Swagger UI and
+              directly from the browser (or using <code class="literal">curl</code> if you have it on your machine).</p><div class="orderedlist"><ol type="a"><li><p>List all entries in the <code class="literal">BookOrder</code> region</p></li><li><p>Fetch the entry from the <code class="literal">BookOrder</code> region having key
+                      <code class="literal">17699</code></p></li><li><p>Perform an ad-hoc query to select entries from the
+                      <code class="literal">BookOrder</code> region having an <code class="literal">orderNumber</code>
+                    value of <code class="literal">17699</code></p></li></ol></div></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e4363"></a>16.2.3.&nbsp;Using the Spring REST Template</h3></div></div></div><p>In this final section, actually create a REST client using the Spring RestTemplate class
+        to aid in building the request and converting the JSON object to </p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-04</code>) Open the RestClientTest class in the
+              com.gopviotal.bookshop.tests package under src/test/java folder. Define the URL that
+              will be used to make the request using the <code class="literal">BASE_URL</code> static String
+              as a starting point. Keep in mind you want to use the URI template format to allow for
+              parametrizing such elements as the key.</p></li><li><p>(<code class="literal">TODO-05</code>) Issue a call to the RestTemplate to return the object
+              given the URL you defined and passing the key <code class="literal">17699</code> as the
+              parameter. Don't forget to also specify what class to return for the object. Assign
+              the result to the <code class="literal">order</code> object.</p></li><li><p>(TODO-06) Run the test. Did it complete successfully? If not, why not? </p></li><li><p> If your test did not work, you may be wondering what caused an error. Because of
+              all the help that you get from the Spring <code class="classname">RestTemplate</code>,
+              it's actually not that easy to see what's happening at the HTTP transport
+              level in terms of requests and responses when you exercise the application. </p><p> For debugging or monitoring HTTP traffic, Eclipse ships with a built-in tool that
+              can be of great value: the TCP/IP Monitor. To open this tool, which is just an Eclipse
+              View, press <code class="literal">Ctrl+3</code> (MacOS: <code class="literal">Command+3</code>) and type
+              'tcp' in the resulting popup window; then press Enter to open the TCP/IP
+              Monitor View. Click the small arrow pointing downwards and choose
+              "properties". </p><!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: center"><div xmlns="" class="figure"><a name="rest-ws-intro-lab-tcp-monitor-properties"></a><div class="figure-contents"><div class="mediaobject" align="center"><img src="images/monitor-properties.png" align="middle" alt="The &#34;properties&#34; menu entry of the TCP/IP Monitor view"></div></div><p class="title"><b>Figure&nbsp;16.3.&nbsp;The "properties" menu entry of the TCP/IP Monitor view</b></p></div><br xmlns="" class="figure-break"></div><p> Choose "Add..." to add a new monitor. As local monitoring port, enter
+              7072 since this port is probably unused. As host name, enter "localhost" and
+              as port enter 7071 since this is the port that Tomcat is running on. Press OK and then
+              press "Start" to start the newly defined monitor. </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Don't forget to start the monitor after adding it! The most common error
+                  at this point is to forget to start the monitor. </p></td></tr></table></div><p>
+            </p></li><li><p>(TODO-07) Return to the RestClientTest class in the STS and locate the BASE_URL
+              definition. Change the port from <code class="literal">7071</code> to <code class="literal">7072</code> so
+              that the TCP/IP monitor you just configured can intercept the requests. Re-run the
+              test and observe the result. You'll need to expand the TCP/IP tab (by double-clicking
+              on it). You should be able to observe that the proper entry came back as indicated by
+              the response body.</p></li><li><p>Return to the JUnit out put screen and observe in the Failure Trace the message
+              being reported. Notice that the expected form of a Data object doesn't match the form
+              being supplied by the JSON object being returned by the server.</p></li><li><p>(TODO-08) Add the appropriate JSON formatting annotation to the
+                <code class="literal">orderDate</code> field in order to instruct the converter to properly
+              interpret the date being provided by the JSON object. Provide the same formatting
+              annotation to the <code class="literal">shipDate</code> field. </p></li><li><p>(TODO-09) Re-run the test. It should now pass. Take a moment to consider what has
+              just happened. You submitted a REST request to the server via the
+                <code class="classname">RestTemplate</code> but you did it via a very typical method call.
+              The data returned from the server was a JSON object (as verified by the TCP/IP
+              monitor). However, the <code class="classname">RestTemplate</code> performed a conversion with
+              the assistance of some well placed formatting annotations on the domain object. What
+              you received was a fully populated <code class="classname">BookOrder</code> object that we
+              were able to assert had the proper order number.</p></li></ol></div><p>Congratulations! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="spring-gemfire_lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="eclipse.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;15.&nbsp;Spring GemFire&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Appendix&nbsp;A.&nbsp;Eclipse Tips</td></tr></table></div></body></html>

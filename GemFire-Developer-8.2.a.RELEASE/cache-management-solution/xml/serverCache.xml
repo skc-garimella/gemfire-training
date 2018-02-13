@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cache
+		xmlns="http://schema.pivotal.io/gemfire/cache"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+		version="8.1">
+	<region name="Customer" >
+		<region-attributes refid="REPLICATE">
+			<entry-idle-time>
+				<expiration-attributes timeout="10" action="destroy" />
+			</entry-idle-time>
+			<cache-listener>
+				<class-name>com.gopivotal.bookshop.buslogic.ServerCacheListener</class-name>
+			</cache-listener>
+
+			<eviction-attributes>
+				<lru-entry-count maximum="4" action="local-destroy" />
+			</eviction-attributes>
+
+		</region-attributes>
+	</region>
+</cache>

@@ -1,0 +1,77 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;5.&nbsp;Client Cache</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="gfsh-session-lab.html" title="Chapter&nbsp;4.&nbsp;gfsh practice"><link rel="next" href="query_lab.html" title="Chapter&nbsp;6.&nbsp;GemFire OQL Query"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="client-cache_lab"></a>Chapter&nbsp;5.&nbsp;Client Cache</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="client-cache-lab-introduction"></a>5.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience working with a GemFire client cache
+      configuration.</p><p><span class="bold"><strong>Concepts you will gain experience with</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Configuring a client cache XML file </p></li><li><p>Defining regions both for local private use as well as connecting to cache
+            server</p></li><li><p>Configuring cache properties using gemfire.properties</p></li><li><p>Initializing the client cache in an application</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 45 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="client-cache-lab-quick-instructions"></a>5.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="client-cache-lab-detaild-instructions"></a>5.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific section. Each section describes the
+      steps to perform specific tasks. Before beginning this lab, make sure you have started the
+      server side processes using the <code class="literal">startServer.sh</code> script
+        (<code class="literal">startServer.bat</code> for Windows) in the
+        <code class="filename">server-bootstrap</code> lab folder.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1098"></a>5.3.1.&nbsp;Configuring the Cache Client XML file</h3></div></div></div><p>The client's cache.xml &lt;client-cache&gt; declaration automatically configures it as a
+        standalone Gemfire application. At this point, the locator and server will have already been
+        started and the listener is listening on port <code class="literal">41111</code>.</p><p>In this section, you will edit the <code class="filename">xml/clientCache.xml</code> file to
+        perform the following tasks.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) Define a pool configuration with one entry configured
+              to contact the locator at <code class="literal">localhost</code> and listening on port
+                <code class="literal">41111</code></p></li><li><p>(<code class="literal">TODO-02)</code> Define a region called <code class="literal">Customer</code> as
+              a proxy type region using either the refid (region shortcut) or explicitly using
+              region attributes. Similarly, create a region called <code class="literal">BookMaster</code> but
+              this time create it as a caching proxy type region.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1135"></a>5.3.2.&nbsp;Configuring additional cache properties</h3></div></div></div><p>In addition to providing configuration information in the cache xml file, you can also
+        define properties using a gemfire.properties file. In this section, you will use this file
+        to define the logging level that will be used by the client application. Some of the
+        possible configurations are found in the table following. Consult the GemFire User Guide
+        appendix for a full list of properties.</p><div class="table"><a name="d0e1140"></a><p class="title"><b>Table&nbsp;5.1.&nbsp;Client Cache properties</b></p><div class="table-contents"><table summary="Client Cache properties" border="1"><colgroup><col><col></colgroup><thead><tr><th>Property</th><th>Meaning</th></tr></thead><tbody><tr><td>log-level</td><td>Level of detail of the messages written to the system member&#8217;s log. Setting
+                log-level to one of the ordered levels causes all messages of that level and greater
+                severity to be printed.<p>Valid values from lowest to highest are fine, config,
+                  info, warning, error, severe, and none. Default = config</p></td></tr><tr><td>durable-client-id</td><td>Used only for clients in a client/server installation. If set, this indicates
+                that the client is durable and identifies the client. The ID is used by servers to
+                reestablish any messaging that was interrupted by client downtime. Default =
+                none</td></tr><tr><td>durable-client-timeout</td><td>Used only for clients in a client/server installation. Number of seconds this
+                client can remain disconnected from its server and have the server continue to
+                accumulate durable events for it. Default = 300</td></tr></tbody></table></div></div><br class="table-break"><p>(<code class="literal">TODO-03</code>) Open the <code class="filename">gemfire.properties</code> file and
+        set the log level initially to <code class="literal">warning</code>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1181"></a>5.3.3.&nbsp;Configure client application to initialize client cache</h3></div></div></div><p>Open the <code class="classname">ClientCacheTests.java</code> file in the
+          <code class="filename">com.gopivotal.bookshop.tests</code> package (<code class="filename">under
+          src/test/java</code>) and add code for the following methods.</p><div class="itemizedlist"><ul type="disc"><li><p>(<code class="literal">TODO-04</code>) In the <code class="code">setup()</code> method to, add code to
+              create a <code class="classname">ClientCache</code>. Use the appropriate property on the
+                <code class="classname">ClientCacheFactory</code> class to define the
+                <code class="code">cache-xml-file</code> property to point to
+                <code class="filename">xml/clientCache.xml</code>. </p></li><li><p>(<code class="literal">TODO-05</code>) Also, add code to the same <code class="code">setup()</code>
+              method to get the <code class="literal">Customer</code> region and assign to the class private
+              field <code class="code">customers</code>. Add a similar statement to get the
+                <code class="literal">BookMaster</code> region and assign to the private field
+                <code class="code">books</code>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>You will not edit the test code itself, which performs the get operations.
+                  Details on how to make such calls to the region will be covered in the next
+                  section.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-06</code>) Finally, run the program to verify you were able to
+              connect. If you implemented the client cache configuration and the client setup code
+              correctly, one test should pass and one test is currently being ignored (and will be
+              addressed in the next section of this lab).</p></li><li><p>As an optional step, go back and edit the <code class="filename">gemfire.properties</code>
+              file and change the log level to <code class="literal">fine</code>. Re-run the application and
+              notice the additional detal that is output when running your client
+              application.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1256"></a>5.3.4.&nbsp;Define a local region</h3></div></div></div><p>In this final section, you will define a local region and run a test to load and fetch
+        data from it.</p><div class="itemizedlist"><ul type="disc"><li><p>(<code class="literal">TODO-07</code>) Open the <code class="filename">xml/clientCache.xml</code>
+              file and add an additional region called <code class="literal">LocalRegion</code>. Use the
+              region shortcuts to define this as a local region.</p></li><li><p>(<code class="literal">TODO-08</code>) Return to the <code class="filename">ClientCacheTests</code>
+              class and comment the <code class="code">@Ignore</code> annotation on
+                <code class="code">testLocalRegion()</code>.</p></li><li><p>(<code class="literal">TODO-09</code>) Finally re-run the tests and verify that all tests
+              pass.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e1295"></a>5.3.5.&nbsp;Creating a DAO object for BookMaster</h3></div></div></div><p>To begin, open the <code class="filename">BookMasterDao.java</code> class in the
+          <span class="package">com.gopivotal.bookshop.buslogic</span> package in the IDE. The purpose of this
+        class is to hide the basic operations involved in creating, reading, updating and deleting
+        entries (the CRUD operations). </p><p>Note that the region is defined to store <code class="classname">BookMaster</code> objects with
+        an <code class="classname">Integer</code> key as illustrated by the private field defined at the top
+        of the DAO. The constructor is responsible for initializing the region using the
+          <code class="classname">ClientCache</code> that is passed in.</p><p>You will implement the basic functionality of this class in the following steps.</p><div class="itemizedlist"><ul type="disc"><li><p>(<code class="literal">TODO-10</code>) Before implementing the functionality in
+                <code class="classname">BookMasterDao</code>, open the corresponding JUnit test class
+                (<code class="classname">DataOperationsTests.java</code> in the
+                <span class="package">com.gopivotal.bookshop.tests</span> package in
+                <code class="filename">src/test/java</code>). Take a moment to inspect the various test
+              methods to see how the DAO is used.</p></li><li><p>(<code class="literal">TODO-11</code>) Implement the <code class="code">insertBook()</code> method. Use
+              the key and book object to insert into the region.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Recall that there are different methods that can be used to insert an entry.
+                  Use the method that enforces that the entry can't already exist.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-12</code>) Implement the <code class="code">getBook()</code> method. Use the
+              supplied key to retrieve the associated entry from the region and return it.</p></li><li><p>(<code class="literal">TODO-13</code>) Implement the <code class="code">updateBook()</code> method. Use
+              the supplied key and <code class="classname">BookMaster</code> object to update the existing
+              entry in the region.</p></li><li><p>(<code class="literal">TODO-14</code>) Implement the <code class="code">removeBook()</code> method. Use
+              the supplied key to delete the entry from the region. Recall that there are two
+              methods to do this. Either one is acceptable.</p></li><li><p>(<code class="literal">TODO-15</code>) When you have completed all the steps above, run the
+              test suite (<code class="classname">DataOperationsTests</code>). Make sure the GemFire server
+              process (locator and server) are already running if you haven't done so
+              already.</p></li></ul></div><p>Congratulations!! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="gfsh-session-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="query_lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;4.&nbsp;gfsh practice&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;6.&nbsp;GemFire OQL Query</td></tr></table></div></body></html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache
+		xmlns="http://schema.pivotal.io/gemfire/cache"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+		version="8.1">
+	<!-- TODO-02: Add the appropriate configuration to ensure that PDX serialization is being used and that
+	              you are using the ReflectionBasedAutoSerializer -->
+	<!-- TODO-03: Next be sure to add configuration to register the classes you plan to perform auto serialization on.
+	              Note: You can use wild cards to configure all classes in the domain package. -->
+	<!-- TODO-04: Add an attribute to the pdx tag to force the server to not de-serialize objects -->
+	<pdx read-serialized="true" >
+		<pdx-serializer>
+			<class-name>com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer</class-name>
+			<parameter name="classes">
+				<string>com.gopivotal.bookshop.domain.*</string>
+			</parameter>
+		</pdx-serializer>
+	</pdx>       
+        <region name="Customer">
+         <region-attributes refid="PARTITION">
+         	
+        </region-attributes>
+       </region>    
+
+</cache>

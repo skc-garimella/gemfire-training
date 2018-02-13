@@ -1,0 +1,94 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;8.&nbsp;Cache Management</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="custom-partitioning-lab.html" title="Chapter&nbsp;7.&nbsp;Custom Partitioned Regions"><link rel="next" href="server-events-lab.html" title="Chapter&nbsp;9.&nbsp;Server Side Event Handling"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="cache-management-lab"></a>Chapter&nbsp;8.&nbsp;Cache Management</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="cache-management-lab-introduction"></a>8.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will learn to configure cache expiration and cache eviction.</p><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Configuring cache expiration</p></li><li><p>Configuring cache eviction</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 30 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="cache-management-lab-quick-instructions"></a>8.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="cache-management-lab-detailed-instructions"></a>8.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2066"></a>8.3.1.&nbsp;Configuring Cache Expiration</h3></div></div></div><p>Expiration ensures that your data is current and pertinent by removing old and unused
+        entries from the GemFire. It can also give you some control over Region size. When you try
+        to access an expired entry, GemFire looks to another source for a fresh update. If the data
+        does not exist in another member, the cache loader you have installed on the data region is
+        called.</p><p>This exercise uses idle time expiration, configured through the XML file to destroy
+        expired entries. The program creates four entries and then waits beyond the expiration time.
+        During the wait time, the program updates one entry and accesses another. When the
+        expiration time elapses, the third and fourth entries (which are not accessed and not
+        modified) expire. The cache listener installed on the region reports all changes to the
+        entries.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2073"></a>8.3.1.1.&nbsp;Configure the XML</h4></div></div></div><p>Configure and add the corresponding region attributes in
+            <code class="filename">xml/serveCache.xml</code> to:</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) Configure the <code class="literal">Customer</code> region
+                with entry idle time expiration. Set the timeout to <code class="literal">10 seconds</code>,
+                and <code class="literal">destroy</code> expiration action.</p></li><li><p>(<code class="literal">TODO-02</code>) Configure the
+                  <code class="classname">ServerCacheListener</code> cache listener to report changes to the
+                cached data.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2106"></a>8.3.1.2.&nbsp;Configure the Application</h4></div></div></div><p>Open the <code class="classname">SampleDataExpiration</code> class skeleton within
+            <code class="filename">com.gopivotal.bookshop.buslogic</code> package, and add the code for the
+          following behavior:</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-03</code>) Add the code in the
+                  <code class="methodname">getExpirationTime()</code> method to return the entry idle
+                timeout setting from the region attributes ( <code class="filename">serverCache.xml</code> file).</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>You can access these configured values by invoking the appropriate
+                      <code class="methodname">get()</code> method on the region.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-04</code>) Add the code in the
+                  <code class="methodname">updateCustomer()</code> method to update the customer details of
+                the key passed in. Make changes to any information, except the key value and the
+                customer ID. A good option is to add a new address.</p></li><li><p>(<code class="literal">TODO-05</code>) Review the
+                  <code class="methodname">retrieveAndPrintRegionData()</code> method and observe it's
+                purpose is to iterate over the entries and print out the details of each.</p></li><li><p>(<code class="literal">TODO-06</code>) Add the code in the <code class="methodname">run()</code>
+                method, in the following sequence:</p><div class="orderedlist"><ol type="a"><li><p>Retrieve and populate the cache with the customer's data.</p></li><li><p>Show the contents of the cache (calling the
+                        <code class="methodname">retrieveAndPrintRegionData()</code> method).</p></li><li><p>Get the idle timeout value, and use
+                        <code class="methodname">Thread.sleep()</code> method to suspend the thread
+                      execution for (timeout - 1) seconds (remember the
+                        <code class="methodname">sleep()</code> method assumes time is in
+                      milliseconds).</p></li><li><p>Perform a <code class="methodname">get()</code> on the Customer region to get one
+                      customer, and update the details of the second customer by calling
+                        <code class="methodname">updateCustomer()</code>.</p></li><li><p>Use the <code class="methodname">Thread.sleep()</code> method to sleep past
+                      expiration timeout.</p></li><li><p>Show the contents of the cache past expiration timeout.</p></li></ol></div></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2200"></a>8.3.1.3.&nbsp;Executing the Application</h4></div></div></div><p>Execute the application in STS or command prompt window, and observe that after the
+          expiration timeout, the cache contains only data that are either accessed or modified. In
+          this case, we are running in an embedded model for simplicity. Notice that because you
+          retrieved entry 5540 and updated entry 5541, they remain in the cache after
+          expiration.</p><pre class="programlisting">    Received afterCreate event for entry: 5540, Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+    Received afterCreate event for entry: 5541, Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+    Received afterCreate event for entry: 5542, Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+    Received afterCreate event for entry: 5543, Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+************ Server 1 : Loaded customers data ****************
+
+    5540 =&gt; Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+    5541 =&gt; Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+    5542 =&gt; Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+    5543 =&gt; Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+Before the idle time expiration, access and update one entry each...
+
+Accessed customer, Lula  data !!
+    Received afterUpdate event for entry: 5541, Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+************ Updated customer data ****************
+
+    Received afterDestroy event for entry: 5543
+    Received afterDestroy event for entry: 5542
+After the expiration timeout, the cache contains:
+
+    5540 =&gt; Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+    5541 =&gt; Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+Closing the cache and disconnecting.</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e2207"></a>8.3.2.&nbsp;Configuring Cache Eviction</h3></div></div></div><p>You can use eviction to control how much heap your data regions use. Eviction controls
+        your data region size by removing least recently used (LRU) entries to make way for new
+        data. It kicks in when your data region reaches a specified size or entry count. </p><p>In this exercise, the data region is configured to keep the entry count at
+          <code class="literal">4</code> or below by destroying LRU entries. A cache listener installed on the
+        region reports the changes to the region entries.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2217"></a>8.3.2.1.&nbsp;Configuring the XML</h4></div></div></div><p>(<code class="literal">TODO-07</code>) Configure and add the corresponding region attributes in
+          the <code class="filename">serverCache.xml</code> to destroy entries when the region reaches entry
+          count of <code class="literal">4</code> . You should put this just after the cache
+          listener entry in the file.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e2231"></a>8.3.2.2.&nbsp;Running the Application</h4></div></div></div><p>Open the <code class="classname">SimpleDataEviction</code> class within the
+            <code class="filename">com.gopivotal.bookshop.buslogic</code> package. Observe that the code is
+          written to first insert 4 Customer entries, followed by a fifth entry. </p><p>Run this program and observe the output. You should see something like the
+          following:</p><pre class="programlisting">    Received afterCreate event for entry: 5540, Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+    Received afterCreate event for entry: 5541, Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+    Received afterCreate event for entry: 5542, Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+    Received afterCreate event for entry: 5543, Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+************ Loaded customers data ****************
+    5540 =&gt; Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+    5541 =&gt; Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+    5542 =&gt; Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+    5543 =&gt; Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+************ Loaded customers data ****************
+    Received afterCreate event for entry: 5545, Customer [customerNumber=5545, firstName=Fifth, lastName=Customer]
+    Received afterDestroy event for entry: 5540
+************ Inserted one more customer data ****************
+    5541 =&gt; Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+    5542 =&gt; Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+    5543 =&gt; Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+    5545 =&gt; Customer [customerNumber=5545, firstName=Fifth, lastName=Customer]</pre><p>Notice that in order to insert the fifth entry, it had to evict one of the other
+          entries. The method it used was to locate the least recently used (the first entry) and
+          evict it. Observer the above output and note that when entry <code class="literal">5545</code> was
+          created that entry <code class="literal">5540</code> was destroyed.</p><p>Congratulations!! You have completed this lab.</p></div></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="custom-partitioning-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="server-events-lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;7.&nbsp;Custom Partitioned Regions&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;9.&nbsp;Server Side Event Handling</td></tr></table></div></body></html>

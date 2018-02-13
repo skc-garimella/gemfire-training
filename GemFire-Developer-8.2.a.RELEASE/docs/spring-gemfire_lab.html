@@ -1,0 +1,90 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;15.&nbsp;Spring GemFire</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="functions_lab.html" title="Chapter&nbsp;14.&nbsp;Client Function Execution"><link rel="next" href="gemfire-rest_lab.html" title="Chapter&nbsp;16.&nbsp;Understanding REST Support in GemFire"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="spring-gemfire_lab"></a>Chapter&nbsp;15.&nbsp;Spring GemFire</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e3855"></a>15.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will gain hands-on experience working the Spring Data GemFire project to
+      build client-side GemFire applications. These series of steps will help you appreciate
+      simplicity of configuring GemFire clients using Spring.</p><p><span class="bold"><strong>What you will learn</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Basic client cache configuration using Spring Data GemFire</p></li><li><p>Configuring and using the GemfireTemplate</p></li><li><p>Using the GemFire Repository interface</p></li><li><p>Registering interest using Spring Data GemFire</p></li></ul></div><p><span class="bold"><strong>Estimated completion time:</strong></span> 45 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e3880"></a>15.2.&nbsp;Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. Before beginning this lab, make sure you have started the
+      server side processes using the <code class="literal">startServer.sh</code> script
+        (<code class="literal">startServer.bat</code> for Windows) in the
+        <code class="filename">server-bootstrap</code> lab folder.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3894"></a>15.2.1.&nbsp;Basic configuration using Spring Data GemFire</h3></div></div></div><p>In this first section, you will get a basic configuration up and running that will
+        include setting up a client cache and defining a client region for the BookMaster region on
+        the server.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-01</code>) Locate and open the
+                <code class="filename">spring-config.xml</code> file under
+                <code class="filename">src/main/resources</code> folder. Notice that this is largely an empty
+              file at the moment. Notice also that the Gemfire namespace has been enabled with the
+                <code class="literal">gfe</code> prefix. Your first task is to configure the client pool that
+              is configured to point to the locator.</p></li><li><p>(<code class="literal">TODO-02</code>) Create a client cache definition pointing to the pool
+              you just defined.</p></li><li><p>(<code class="literal">TODO-03</code>) Define a client region and configure it as a
+                <code class="literal">CACHING_PROXY</code></p></li><li><p>(<code class="literal">TODO-04</code>) Open the
+                <code class="filename">BasicSpringClientTests.java</code> file under
+                <code class="filename">src/test/java</code>. The basic structure of this test harness has
+              already been set up.  Take a moment to get familiar with the basic way this test
+              harness is configured using the Spring-aware integration test. Notice also how we
+              injected the region into the harness using the <code class="classname">@Resource</code>
+              annotation. Usually, we use the Spring specific <code class="classname">@Autowired</code>
+              annotation but the nature of this object requires we inject it as a named bean.</p></li><li><p>(<code class="literal">TODO-05</code>) Finally, run the test by right-mouse clicking on the
+              file in the package explorer or in the open file. Then select <code class="literal">Run As -&gt; JUnit
+                Test</code>. If you configured the <code class="filename">spring-config.xml</code> file
+              properly, the tests should pass.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3959"></a>15.2.2.&nbsp;Using GemfireTemplate</h3></div></div></div><p>In this next section, you will gain familiarity with the GemfireTemplate, one of the
+        helper classes provided by the Spring Data GemFire project.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-06</code>) Return to the spring-config.xml file and add a basic
+              bean definition to instantiate an instance of the GemFire template. You can either
+              inject the <code class="literal">BookMaster</code> region as a constructor argument or set it as
+              a property on the bean.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>You will use a basic bean definition as &lt;bean id="someName"
+                  class="ClassToInstantiate"&gt;&lt;/bean&gt; where <code class="literal">ClassToInstantiate</code>
+                  is the full class with package.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-07</code>) Return to the
+                <code class="classname">BasicSpringClientTests</code> class and add a definition to autowire
+              the GemFire template you just configured into the test harness.</p></li><li><p>(<code class="literal">TODO-08</code>) Locate the
+                <code class="methodname">testGemFireTemplate()</code> test method and add some code to
+              execute a simple query on the template. Use the query() method to search for books
+              having an author of <code class="literal">Daisy Mae West</code>. Also write a couple of assert
+              tests to assert that you got just one result back and the title of the book was
+                <code class="literal">A Treatise of Treatises</code>.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Note that the results returned are <code class="classname">SelectResults</code>, which
+                  is a GemFire collection type. You can use the <code class="methodname">asList()</code>
+                  method to convert the results into simple Java <code class="classname">List</code>
+                  type.</p></td></tr></table></div></li><li><p>Re-run the test harness and ensure the tests pass. </p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e4019"></a>15.2.3.&nbsp;Using Repositories</h3></div></div></div><p>This section will allow you to gain familiarity with the concept of Repositories.  This
+        approach allows you to create repository (or DAO) style interfaces declaratively.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-09</code>) Open the <code class="classname">BookMaster</code> class in
+              the <code class="filename">com.gopivotal.bookshop.domain</code> package. Add appropriate
+              annotation to the top of the class to declare that domain object is obtained from the
+                <code class="literal">BookMaster</code> region.</p></li><li><p>(<code class="literal">TODO-10</code>) Create a new interface in the
+                <code class="filename">com.gopivotalbookshop.buslogic</code> package that will be your
+              Repository interface. Make it extend the <code class="classname">CrudRepository</code> base
+              interface and set the entry type and key type appropriately for the generics part of
+              the definition.</p><p>In the same interface declaration, add a <code class="literal">findBy</code> method
+              declaration that will support finding <code class="classname">BookMaster</code> objects by the
+                <code class="literal">Author</code> attribute. The method have a single argument of type
+                <code class="classname">String</code> and return a list of <code class="classname">BookMaster</code>
+              objects.</p></li><li><p>(<code class="literal">TODO-11</code>) Return to the <code class="filename">spring-config.xml</code>
+              file and add an entry to configure scanning for repositories. In order to do this,
+              you'll first have to enable the <code class="literal">gfe-data</code> namespace as shown below.</p><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="540"><tr><td><img src="images/enable_namespace.jpg" width="540"></td></tr></table></div></li><li><p>(TODO-12) Return to the <code class="classname">BasicSpringClientTests</code> class and
+              add another declaration near the top of the class to autowire in your newly created
+                <code class="classname">Repository</code> interface.</p></li><li><p>(<code class="literal">TODO-13</code>) Next, locate the
+                <code class="methodname">testGemFireRepositories()</code> method and add the necessary code
+              to correctly invoke the method on the repository instance. Also write a couple of
+              asserts to verify you get only one matching entry and the entry's title is <code class="literal">A
+                Treatise of Treatises</code>. You can use the code from the
+                <code class="methodname">testGemFireTemplate()</code> method as a reference.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e4110"></a>15.2.4.&nbsp;Configuring Listeners and registering interest</h3></div></div></div><p>In this final section, you will explore the capabilities of Spring Data GemFire to
+        simplify configuration of CacheListeners and to enable clients to register interest in
+        certain keys. Since you've already performed most of the basic coding in a prior lab, all
+        you'll do in this lab is add the appropriate Spring Data GemFire configurations and re-run
+        the <code class="classname">ClientConsumer</code> and <code class="classname">ClientWorker</code> to test
+        the behavior out.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-14</code>) Open the <code class="filename">spring-config.xml</code> file
+              again and locate the pool configuration. Add an attribute to enable client
+              subscriptions.</p></li><li><p>(<code class="literal">TODO-15</code>) Locate the client-region definition you created in
+                <code class="literal">TODO-03</code>. Add an entry inside this region definition to configure
+              a <code class="classname">CacheListener</code> for the region. Have it point to the
+                <code class="classname">LoggingCacheListener</code> that is found in the
+                <code class="filename">com.gopivotal.gookshop.buslogic</code> package.</p></li><li><p>(TODO-16) Finally, add another entry inside the client-region definition to
+              register interest in the key <code class="literal">999</code>. </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Note that this key is an integer type so you'll need to configure
+                  appropriately when creating the interest registration.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-18</code>) Open the <code class="classname">ClientConsumer</code> class
+              and take a look at the functionality implemented there. As you can see, all the class
+              does is initialize the Spring <code class="classname">ApplicationContext</code> and then wait
+              for the <code class="classname">ClientWorker</code> to perform some operations on the cache.
+              What you should see when that happens is that the
+                <code class="classname">SimpleCacheListener</code> will report that an entry was created and
+              deleted having the key <code class="literal">999</code>. </p><p>Go ahead and run the class now.</p></li><li><p>(<code class="literal">TODO-19</code>) Next, locate the <code class="classname">ClientWorker</code>
+              class. This is basically the same class that was used in the events lab to create a
+              new <code class="classname">BookMaster</code> entry with the key <code class="literal">999</code>. Run
+              this class. The program will start by displaying some basic information and then pause
+              waiting for user input to continue.</p><p>Place your cursor in the console area and hit enter. The program will now proceed
+              to insert an entry with key 999 and the remove it before terminating.</p><p>Switch consoles back to the ClientConsumer and observe that the
+              SimpleCacheListener reported that the entry was crated and then deleted.</p></li><li><p>Make sure that both the ClientWorker and ClientConsumer have terminated</p></li></ol></div><p>Congratulations! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="functions_lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="gemfire-rest_lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;14.&nbsp;Client Function Execution&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;16.&nbsp;Understanding REST Support in GemFire</td></tr></table></div></body></html>

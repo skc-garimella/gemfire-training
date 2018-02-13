@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client-cache
+		xmlns="http://schema.pivotal.io/gemfire/cache"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://schema.pivotal.io/gemfire/cache http://schema.pivotal.io/gemfire/cache/cache-8.1.xsd"
+		version="8.1">
+	<!-- TODO-03: Ensure that subscriptions are enabled on the pool -->
+	<pool name="client" >
+		<locator host="localhost" port="41111"/>
+	</pool>
+	<region name="BookMaster">
+		<!-- TODO-04: Modify the region attributes to register the LoggingCacheListener. Be sure to provide a String parameter
+		              representing the filename -->
+		<region-attributes refid="CACHING_PROXY">
+		</region-attributes>
+	</region>
+	<region name="BookOrder">
+		<region-attributes refid="PROXY" />
+	</region>
+	
+</client-cache>

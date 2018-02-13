@@ -1,0 +1,96 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;12.&nbsp;Transaction Management</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="data-serialization-lab.html" title="Chapter&nbsp;11.&nbsp;Data Serialization"><link rel="next" href="server-functions-lab.html" title="Chapter&nbsp;13.&nbsp;Writing Server Side Functions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="tranaction-management-lab"></a>Chapter&nbsp;12.&nbsp;Transaction Management</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tranaction-management-lab-introduction"></a>12.1.&nbsp;Introduction</h2></div></div></div><p>In this lab, you will learn to configure and test GemFire transactions. You can group
+      cache updates with GemFire transactions. Transactions allow you to create dependencies between
+      cache modifications so they all either complete together or fail together.</p><p><span class="bold"><strong>Concepts you will gain experience with:</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>Creating the <code class="literal">Customer</code> region, co-located with the
+              <code class="literal">Order</code> region.</p></li><li><p>Create a Java class to implement GemFire transaction by using the
+              <code class="classname">CacheTransactionManager</code> API.</p></li><li><p>Use transactions to update data on both the <code class="literal">Customer</code> region and
+            the <code class="literal">Order</code> region.</p></li></ul></div><p><span class="bold"><strong>Estimated completion time</strong></span>: 45 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tranaction-management-lab-quick-instructions"></a>12.2.&nbsp;Quick Instructions</h2></div></div></div><p>Quick instructions for this exercise have been embedded within the lab materials in the
+      form of TODO comments. To display them, open the <code class="literal">Tasks</code> view (Window -&gt;
+      Show view -&gt; Tasks (<span class="emphasis"><em>not Task List</em></span>)).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tranaction-management-lab-detailed-instructions"></a>12.3.&nbsp;Detailed Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks. Open the <code class="literal">transactions</code> project in the
+      STS.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3149"></a>12.3.1.&nbsp;Implement the TransactionService functionality</h3></div></div></div><p>(<code class="literal">TODO-01</code>): Before beginning, open the test harness,
+          <code class="classname">TransactionalTest</code> under the
+          <code class="literal">com.gopivotal.bookshop.tests</code> under <code class="filename">src/test/java</code>.
+        Observe the two tests that will be executed to validate a correct transaction commit and a
+        transaction rollback. Note that the first test asserts that the transaction commits
+        successfully and that the associated values have been updated.</p><p>Open the <code class="classname">TransactionsService</code> class within
+          <code class="filename">com.gopivotal.bookshop.buslogic</code> package and locate the
+          <code class="methodname">updateCustomerAndOrder()</code> method. Your responsibility is to write
+        the necessary code to perform the fetch and update within a transaction. Perform the
+        following steps.</p><div class="orderedlist"><ol type="1"><li><p> (<code class="literal">TODO-02</code>): Define
+                <code class="classname">CacheTransactionManager</code>, and get the transaction
+              context.</p></li><li><p>Add the transactional code.</p><div class="orderedlist"><ol type="a"><li><p>(<code class="literal">TODO-03a</code>) Begin the transaction.</p></li><li><p>(<code class="literal">TODO-03b</code>) Retrieve and update the
+                      <code class="classname">Customer</code> using the customerKey and updatedCustomerPhone
+                    values. Similarly, retrieve and update the Order using the orderKey and
+                    updatedOrderDate value.</p></li><li><p>(<code class="literal">TODO-03c</code>): Save the <code class="classname">Customer</code> and
+                      <code class="classname">Order</code> objects in the cache with the same keys.</p></li><li><p>(<code class="literal">TODO-03d</code>): Commit the transaction.</p></li></ol></div></li><li><p>(<code class="literal">TODO-04</code>) Add code in the exception handler to roll back the
+              transaction in case of any error with the transaction. This handler should catch the
+              exception, roll back the transaction and re-throw the exception so the test harness
+              can catch it.</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3230"></a>12.3.2.&nbsp;Cache configuration and Server Start</h3></div></div></div><p>There are several configuration changes you'll want to make to ensure transactions
+        between two partitioned regions work properly.</p><div class="orderedlist"><ol type="1"><li><p>Open the <code class="filename">serverCache.xml</code> file.</p></li><li><p>(<code class="literal">TODO-05</code>): Set the cache configuration attribute
+                <code class="literal">copy-on-read</code> to <code class="literal">true</code> to avoid in place
+              changes.</p></li><li><p>(<code class="literal">TODO-06</code>): Add necessary configuration so that the
+                <code class="literal">Order</code> region is co-located with the <code class="literal">Customer</code>
+              region.</p></li><li><p>(<code class="literal">TODO-07</code>): Save your work and then start the locator and two
+              servers using the start script in the project folder.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>From the command prompt, be sure to first run either <span><strong class="command">source
+                    gf.config</strong></span> or <span><strong class="command">setEnv.bat</strong></span>, which are both in the
+                    <code class="filename">server-bootstrap/scripts</code> project. Next, run <span><strong class="command">gfsh
+                    run --file=serverStart.gf</strong></span></p></td></tr></table></div></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3286"></a>12.3.3.&nbsp;Running the tests</h3></div></div></div><p>Run the tests and verify both tests pass. </p><p>Also, take a look at the <code class="filename">listener.log</code> file that is created in the
+        transactions folder. The last entries should look something like the following
+        output.</p><pre class="programlisting">[info 2015/11/18 13:27:43.635 MST server2 &lt;ServerConnection on port 56069 Thread 0&gt; tid=0x4a] afterUpdate:   Entry updated for key: 1001
+                 Old value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=123-654-543, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+                 New Value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=222-22222-0000, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+
+[info 2015/11/18 13:27:43.639 MST server2 &lt;ServerConnection on port 56069 Thread 0&gt; tid=0x4a] afterUpdate:   Entry updated for key: 1001
+                 Old value: Order [orderNumber=ORD001, orderDate=Tue Dec 03 00:00:00 MST 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+                 New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+</pre><p>What this is actually showing is that the updates to the entries once the transaction
+        commits. These are captured and logged using the <code class="classname">LoggingCacheListener</code>
+        to fire on the <code class="methodname">afterUpdate()</code> event.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e3306"></a>12.3.4.&nbsp;Implementing a TransactionListener</h3></div></div></div><p>In this next section, you will implement a <code class="classname">TransactionListener</code>
+        that will allow you to also track the transactional events, namely the commit and rollback
+        operations. This will allow you to verify that the commit and rollback events actually
+        occur.</p><p>To begin, open the <code class="classname">LoggingTransactionListener</code> class. Note that
+        this class extends <code class="classname">TransactionListenerAdapter</code> as well as implementing
+          <code class="classname">Declarable</code>. You will implement two methods that override the
+        methods on the adapter class.</p><div class="orderedlist"><ol type="1"><li><p>(<code class="literal">TODO-08</code>): First, add an <code class="methodname">afterCommit()</code>
+              method that overrides the one in TransactionListenerAdapter. In the body of the
+              method, use the logger to log an INFO message that this is an afterCommit event and
+              then also use the <code class="classname">TransactionEvent</code> object that is passed in to
+              obtain the list of related cache events. Iterate over these events, printing out the
+              event details.</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>Refer to one of the methods of the <code class="classname">LoggingCacheListener</code>
+                  for an example of what you might want to print for each event.</p></td></tr></table></div></li><li><p>(<code class="literal">TODO-09</code>): Similarly, add an
+                <code class="methodname">afterRollback()</code> method that overrides the
+                <code class="classname">TransactionListenerAdapter</code> method and use it to log an
+                <code class="literal">INFO</code> message that this is an <code class="literal">afterRollback</code>
+              event. If desired, you may also be interested to obtain and print out related
+              operation(s) that were involved in the transaction that rolled back.</p></li><li><p>(<code class="literal">TODO-10</code>): Open the <code class="filename">serverCache.xml</code> file
+              and add appropriate configuration to register this  LoggingTransactionListener.</p></li><li><p>(<code class="literal">TODO-11</code>): Use the stop script
+                (<code class="filename">serverStop.gf</code>) to stop the locator and servers. Then, restart
+              and re-run the TransactionTests test harness.</p></li></ol></div><p>This time when you  look at the end of the <code class="filename">listener.log</code> file that
+        is created in the <code class="filename">transactions</code> folder, you should see additional log
+        data that should look something like the following. In this case, you'll notice that the
+        updates happen before the <code class="literal">afterCommit</code> event is triggered. Notice also
+        that there are two events that are associated with this commit as shown by the event for
+          <code class="literal">Customer</code> and <code class="literal">Order</code>.</p><pre class="programlisting">[info 2015/11/18 15:28:03.590 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a] afterUpdate:   Entry updated for key: 1001
+                 Old value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=123-654-543, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+                 New Value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=222-22222-0000, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+
+[info 2015/11/18 15:28:03.595 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a] afterUpdate:   Entry updated for key: 1001
+                 Old value: Order [orderNumber=ORD001, orderDate=Tue Dec 03 00:00:00 MST 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+                 New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+
+[info 2015/11/18 15:28:03.597 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a] afterCommit: TxId= TXId: 192.168.0.60(DataOperations Client:31819:loner):57660:0d39b61c:DataOperations Client:1
+
+[info 2015/11/18 15:28:03.597 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a]    Entry updated for key: 1001
+            Old value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=123-654-543, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+            New Value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=222-22222-0000, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+
+[info 2015/11/18 15:28:03.598 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a]    Entry updated for key: 1001
+            Old value: Order [orderNumber=ORD001, orderDate=Tue Dec 03 00:00:00 MST 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+            New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+
+[info 2015/11/18 15:28:03.704 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a] afterRollback: TxId= TXId: 192.168.0.60(DataOperations Client:31819:loner):57660:0d39b61c:DataOperations Client:2
+
+[info 2015/11/18 15:28:03.704 MST server2 &lt;ServerConnection on port 57651 Thread 0&gt; tid=0x4a]    Cache event received with operation: UPDATE</pre><p>Congratulations!! You have completed this lab. Be sure to use the
+          <code class="filename">serverStop.gf</code> script to stop the locator and servers.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="data-serialization-lab.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="server-functions-lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;11.&nbsp;Data Serialization&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;13.&nbsp;Writing Server Side Functions</td></tr></table></div></body></html>

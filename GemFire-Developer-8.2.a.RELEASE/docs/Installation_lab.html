@@ -1,0 +1,87 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;Installing the GemFire labs Environment</title><link rel="stylesheet" href="css/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.70.0"><link rel="start" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="up" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="prev" href="index.html" title="GemFire Developer Course - Lab Documentation"><link rel="next" href="server-configuration-lab.html" title="Chapter&nbsp;2.&nbsp;Server Configuration"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.pivotal.io" title="Pivotal"><img style="border:none;" src="images/heading-logo-lhs.jpg"></img></a><a style="border:none;" href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/heading-logo-rhs.jpg"></img></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="Installation_lab"></a>Chapter&nbsp;1.&nbsp;Installing the GemFire labs Environment</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e12"></a>1.1.&nbsp;Introduction</h2></div></div></div><p>Welcome to the GemFire-Developer course. We have tried to make the lab setup as simple as
+      possible. There are some installers that you can use to install everything you need for the
+      course on your file system.</p><p><span class="bold"><strong>What You will do:</strong></span></p><p>
+      </p><div class="itemizedlist"><ul type="disc"><li><p>Install and configure STS, GemFire and lab environment</p></li><li><p>Start servers and verify correct configuration</p></li></ul></div><p>
+    </p><p><span class="bold"><strong>Estimated completion time</strong></span>: 30 minutes</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e34"></a>1.2.&nbsp;Instructions</h2></div></div></div><p>Instructions for this lab are divided into specific sections. Each section describes the
+      steps to perform specific tasks.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e39"></a>1.2.1.&nbsp;GemFire Installation Prerequisites</h3></div></div></div><p>
+        </p><div class="orderedlist"><ol type="1"><li><p>Make sure that your system meets the system requirements listed. Refer to the
+              product documentation at <a href="http://docs.gopivotal.com/gemfire/" target="_top">http://docs.gopivotal.com/gemfire/</a>.</p></li><li><p>Check that your Java version is appropriate and that Java is on your path. To
+              check your current Java version, type java -version at a command-line. Your output
+              should look something like
+              this</p><pre class="programlisting">java version "1.8.0_66"
+Java(TM) SE Runtime Environment (build 1.8.0_66-b17)
+Java HotSpot(TM) 64-Bit Server VM (build 25.66-b17, mixed mode)</pre></li><li><p>To install GemFire and the lab environment, you will need Java Developer Kit 1.7.0
+              or higher. If this command returned an error, that means Java is either not installed,
+              or not on your <code class="literal">PATH</code> .</p><p>You can download Sun/Oracle Java SE <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_top">here</a></p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Java 1.8 is officially supported as of GemFire version 8.2</p></td></tr></table></div></li></ol></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e70"></a>1.2.2.&nbsp;Install Lab Environment</h3></div></div></div><p>You will be using the Spring Tool Suite (STS) IDE for building and executing most of the
+        exercises for this course. The lab installation package includes not only the STS but also
+        GemFire and lab files. To install, perform the following steps.</p><p>
+        </p><div class="orderedlist"><ol type="1"><li><p>Locate the appropriate installer for your target platform. Several are provided
+              for Windows (32 and 64 bit), Linux (32 and 64 bit) and Mac. Once located, run the
+              installer and generally take the recommended default values.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Make sure you don't have any blank spaces in the path you choose for
+                installation. For example, avoid choosing directories with path such as
+                  <code class="filename">C:\Document and Settings\gemfire</code>.  </p></td></tr></table></div><div class="mediaobject"><img src="images/install_wizard.jpg"></div></li><li><p>Once installation has completed, locate the installation folder and labs. For
+              Windows, the path should be C:\GemFire-Developer-8.2.a.RELEASE. For Mac, the path will
+              likely be /Applications/GemFire-Developer-8.2.a.RELEASE.</p><p>Once there, note the folders that have been created.</p><p>The lab files will be found in the GemFire-Developer-8.2.a.RELEASE folder (lab
+              folder has the same name as the course installation folder). The GemFire installation
+              will be found at <code class="filename">Pivotal_GemFire_800_b48319_Linux</code></p><!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: left"><div xmlns="" class="figure"><a name="d0e101"></a><div class="figure-contents"><div class="mediaobject"><img src="images/directory_list.jpg" alt="Listing of folders created by course installer"></div></div><p class="title"><b>Figure&nbsp;1.1.&nbsp;Listing of folders created by course installer</b></p></div><br xmlns="" class="figure-break"></div><p>Change directories to GemFire-Developer-8.2.a.RELEASE/server-bootstrap. This
+              folder contains the basic setup and initialization tooling for the server side of
+              these labs.</p></li></ol></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e112"></a>1.2.3.&nbsp;Starting services</h3></div></div></div><p>In this section, you will configure the environment based on your installation and start
+        the services. To do so, perform the following steps.</p><div class="orderedlist"><ol type="1"><li><p>Two files have been set up in the scripts folder to facilitate setting up the
+              environment variables. Edit one of the configuration scripts (gf.confg for Mac and
+              Linux) or setEnv.bat for Windows. The main thing you need to ensure is that you've
+              properly set the JAVA_HOME location. In addition, verify that COURSE_HOME is correctly
+              set. If you accepted the default installation settings, they should be correct. Your
+              file will possibly look like one of the following:<!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: left"><div xmlns="" class="figure"><a name="d0e121"></a><div class="figure-contents"><pre class="programlisting"># JAVA_HOME may already be set
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_55.jdk/Contents/Home
+export COURSE_HOME=/Applications/GemFire-Developer-8.2.a.RELEASE
+export LAB_HOME=$COURSE_HOME/GemFire-Developer-8.2.a.RELEASE
+export GEMFIRE=$COURSE_HOME/Pivotal_GemFire_800_b48319_Linux
+export PATH=$PATH:$GEMFIRE/bin
+export GF_JAVA=$JAVA_HOME/bin/java
+export GF_SAMPLES=$GEMFIRE/SampleCode
+export CLASSPATH=../bin:./bin:./target/classes:$JAVA_HOME/lib/tools.jar:$GEMFIRE
+/lib/gemfire.jar:$GEMFIRE/lib/antlr.jar:$GEMFIRE/lib/gfSecurityImpl.jar:$GF_SAMP
+LES/helloworld/classes:$GF_SAMPLES/quickstart/classes:$CLASSPATH</pre></div><p class="title"><b>Figure&nbsp;1.2.&nbsp;gf.config Example</b></p></div><br xmlns="" class="figure-break"></div><!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: left"><div xmlns="" class="figure"><a name="d0e126"></a><div class="figure-contents"><pre class="programlisting">set JAVA_HOME=C:\Progra~1\Java\jdk1.6.0_18
+set COURSE_HOME=C:\GemFire-Developer-8.2.a.RELEASE
+set LAB_HOME=%COURSE_HOME%\GemFire-Developer-8.2.a.RELEASE
+set GEMFIRE=%COURSE_HOME%\Pivotal_GemFire_800_b48398_Windows
+set PATH="%PATH%";%GEMFIRE%\bin;%JAVA_HOME%\bin
+set GF_LIB=%GEMFIRE%\lib
+set GF_SAMPLES=%GEMFIRE%\SampleCode
+
+set CLASSPATH=.;../bin;./bin;%GF_LIB%\gemfire.jar;%GF_LIB%\antlr.jar;%GF_LIB%
+\gfSecurityImpl.jar;%GF_SAMPLES\helloworld\classes;%GF_SAMPLES%\quickstart\classes;
+%CLASSPATH%</pre></div><p class="title"><b>Figure&nbsp;1.3.&nbsp;setEnv.bat example</b></p></div><br xmlns="" class="figure-break"></div></p></li><li><p>Open terminal window or command window and change directories to
+                <code class="filename">&lt;LAB_HOME&gt;/server_bootstrap/scripts</code> folder. The location of
+                <code class="literal">LAB_HOME</code> will depend on where you installed the course on your
+              system and should be the same as defined in either the <code class="filename">gf.config</code>
+              file or <code class="filename">setEnv.bat</code> file above.</p><p>Run the startServer.sh script or startServer.bat script to start the server
+              processes and load the cache server with data that will be used for the client-side
+              labs. You should see output similar to the following.<!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: left"><div xmlns="" class="figure"><a name="d0e148"></a><div class="figure-contents"><pre class="programlisting">Got the BookMaster Region: com.gemstone.gemfire.internal.cache.LocalRegion[path='/BookMaster';scope=LOCAL'
+;dataPolicy=EMPTY; concurrencyChecksEnabled]
+Inserted a book: BookMaster [itemNumber=123, title=A Treatise of Treatises]
+Inserted a book: BookMaster [itemNumber=456, title=Clifford the Big Red Dog]
+Inserted a book: BookMaster [itemNumber=789, title=Operating Systems: An Introduction]
+Got the Customer Region: com.gemstone.gemfire.internal.cache.LocalRegion[path='/Customer';
+scope=LOCAL';dataPolicy=EMPTY; concurrencyChecksEnabled]
+Inserted a customer: Customer [customerNumber=5598, firstName=Kari, lastName=Powell, postalCode=44444]
+Inserted a customer: Customer [customerNumber=5543, firstName=Lula, lastName=Wax, postalCode=12345]
+Inserted a customer: Customer [customerNumber=6024, firstName=Trenton, lastName=Garcia, postalCode=88888]
+</pre></div><p class="title"><b>Figure&nbsp;1.4.&nbsp;Output from running startServer.sh or startServer.bat</b></p></div><br xmlns="" class="figure-break"></div></p><p>
+              </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>You can also stop the server processes by running stopServer.sh on Linux and
+                  Mac or stopServer.bat on Windows </p></td></tr></table></div><p>
+            </p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e159"></a>1.2.4.&nbsp;Becoming familiar with the STS</h3></div></div></div><p>In this section, you will start the STS, which is where most of the labs will be
+        performed.</p><p>Begin by locating the STS icon, either by browsing to it (refer to section 1.2.2 above
+        for the location) or by locating an icon, which may have been created on your
+        desktop.</p><p>When running the STS for the first time, the tooling will perform some initial setup
+        that will result in a number of projects being added and organized into working sets.<!--NEW FIGURE DIV--><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="text-align: left"><div xmlns="" class="figure"><a name="d0e168"></a><div class="figure-contents"><div class="mediaobject"><img src="images/sts_projects.jpg" alt="STS project structure"></div></div><p class="title"><b>Figure&nbsp;1.5.&nbsp;STS project structure</b></p></div><br xmlns="" class="figure-break"></div></p><p>Expand the <code class="literal">01-server-bootstrap</code> working set and then the
+          <code class="literal">server-bootstrap</code> project. Expand the <code class="literal">src/test/java</code>
+        folder and then the <code class="filename">com.gopivotal.training</code> package. Locate the
+          <code class="classname">VerifyServerTests.java</code> class file and execute as a JUnit test. </p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/tip.png"></td><th align="left">Tip</th></tr><tr><td align="left" valign="top"><p>To run this program, you can select the file, right-mouse click and select
+              <code class="literal">Run As -&gt; JUnit Test</code>.</p></td></tr></table></div><p>This test will verify that you have correctly configured the server by running a client
+        test that accesses the distributed system, fetching an entry from the server. If you've
+        configured everything correctly, you should see the following output as a result.</p><div class="mediaobject"><img src="images/verify_junit.jpg"></div><p>Congratulations!! You have completed this lab.</p></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr></hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="server-configuration-lab.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">GemFire Developer Course - Lab Documentation&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.pivotal.io/big-data/pivotal-gemfire" title="Pivotal GemFire">Pivotal</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;2.&nbsp;Server Configuration</td></tr></table></div></body></html>
