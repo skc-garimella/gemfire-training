@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_34-b04 (Sun Microsystems Inc.)
+Export-Package: org.codehaus.jettison,org.codehaus.jettison.badgerfish
+ ,org.codehaus.jettison.json,org.codehaus.jettison.mapped,org.codehaus
+ .jettison.util
+Bundle-Vendor: Atlassian
+Bundle-ClassPath: jettison-1.1.jar
+Bundle-Version: 1.0.0
+Bundle-Name: Jettison
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.codehaus.jettison
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

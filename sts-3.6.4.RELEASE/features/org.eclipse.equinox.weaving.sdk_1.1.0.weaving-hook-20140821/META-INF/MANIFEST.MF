@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.2
+Created-By: 1.7.0_67-b01 (Oracle Corporation)
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: G2hFTVPngfh5NUf96Pyy87A7XIE083udjEBFy4pUc/M=
+
+Name: license.html
+SHA-256-Digest: ZPcWT+RA2U0NZV/Hr4/R34K2EI57/1SEd6GAKmcYeg0=
+
+Name: feature.xml
+SHA-256-Digest: L6/WxrTOEybn+Z4RKBcKK0wKKkMN+RSQ2D+567c9BLA=
+
+Name: epl-v10.html
+SHA-256-Digest: mpbQ2vmKpvtKpTDTmcdCxmEhsL2uSh9/+iLSE14d9/0=
+
+Name: feature.properties
+SHA-256-Digest: D8vjB0iH5jE16wGaj33iRJPvXhQQu/F8WiuYbtSexoE=
+

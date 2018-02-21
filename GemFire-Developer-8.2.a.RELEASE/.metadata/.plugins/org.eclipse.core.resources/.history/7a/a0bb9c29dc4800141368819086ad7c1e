@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE client-cache PUBLIC
+"-//GemStone Systems, Inc.//GemFire Declarative Caching 7.0//EN"
+"http://www.gemstone.com/dtd/cache7_0.dtd">
+<client-cache>
+	<!-- TODO-01: Define client pool configuration and define the Customer and BookMaster regions as Proxy regions -->
+	<pool name="client" subscription-enabled="true">
+		<locator host="localhost" port="41111"/>
+	</pool>
+	<region name="Customer">
+		<region-attributes refid="PROXY"/>
+	</region>
+	<region name="BookMaster">
+		<region-attributes refid="PROXY"/>
+	</region>
+</client-cache>

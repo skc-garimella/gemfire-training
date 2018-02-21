@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="events"/>
+<aop-project name="server-functions"/>
+<aop-project name="cache-management-solution"/>
+<aop-project name="spring-gemfire-solution"/>
+<aop-project name="server-events"/>
+<aop-project name="data-operations"/>
+<aop-project name="server-events-solution"/>
+<aop-project name="functions-solution"/>
+<aop-project name="client-cache-solution"/>
+<aop-project name="server-functions-solution"/>
+<aop-project name="server-regions"/>
+<aop-project name="data-serialization-solution"/>
+<aop-project name="query-solution"/>
+<aop-project name="events-solution"/>
+<aop-project name="data-serialization"/>
+<aop-project name="custom-partitioning-solution"/>
+<aop-project name="custom-partitioning"/>
+<aop-project name="server-bootstrap"/>
+<aop-project name="functions"/>
+<aop-project name="server-configuration"/>
+<aop-project name="data-operations-solution"/>
+<aop-project name="client-cache"/>
+<aop-project name="server-regions-solution"/>
+<aop-project name="spring-gemfire"/>
+<aop-project name="server-configuration-solution"/>
+<aop-project name="cache-management"/>
+<aop-project name="query"/>
+</aop-reference-model>

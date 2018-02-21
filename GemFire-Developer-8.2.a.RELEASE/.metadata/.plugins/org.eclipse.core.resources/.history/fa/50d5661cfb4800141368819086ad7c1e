@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE cache PUBLIC
+    "-//GemStone Systems, Inc.//GemFire Declarative Caching 7.0//EN"
+    "http://www.gemstone.com/dtd/cache7_0.dtd">
+
+<!--
+  | cache.xml
+  |
+  | Initializes a region with sample Customer data for querying. 
+-->
+<cache>
+      
+        <region name="Customer">
+    		<region-attributes refid="REPLICATE"/>
+    		<index name="PrimIndex">
+    			<primary-key field="intValue"/>
+    		</index>
+    	</region>
+          
+        <region name="BookMaster">
+      		<region-attributes refid="REPLICATE"/>
+    	</region>
+    	    	
+    	<region name="BookOrder">
+      		<region-attributes refid="REPLICATE"/>
+    	</region>
+    	
+        <region name="InventoryItem">
+      		<region-attributes refid="REPLICATE"/>
+    	</region>
+               <function-service>
+       	<function>
+      		 <class-name>com.gopivotal.bookshop.buslogic.Function_FindCustByCity</class-name>
+      	 </function>
+       </function-service>     	
+        
+        	
+</cache>

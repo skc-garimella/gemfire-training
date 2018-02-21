@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE client-cache PUBLIC
+"-//GemStone Systems, Inc.//GemFire Declarative Caching 7.0//EN"
+"http://www.gemstone.com/dtd/cache7_0.dtd">
+<client-cache>
+	<!-- Configure the pool connection -->
+	<pool name="client" subscription-enabled="true">
+		<locator host="localhost" port="41111"/>
+	</pool>
+	
+	<!-- TODO-01: Open clientCache.xml file and inspect the region configurations below -->
+	<!--  The Customer and BookMaster, BookOrder and InventoryItem regions are defined
+	      as CACHING_PROXY regions, using the one and only pool definition -->
+	<region name="Customer">
+		<region-attributes refid="CACHING_PROXY"/>
+	</region>
+	
+	<region name="BookMaster">
+		<region-attributes refid="PROXY" />
+	</region>
+	
+   	<region name="BookOrder">
+     	<region-attributes refid="CACHING_PROXY"/>
+   	</region>
+
+    <region name="InventoryItem">
+  		<region-attributes refid="CACHING_PROXY"/>
+   	</region>
+	
+</client-cache>

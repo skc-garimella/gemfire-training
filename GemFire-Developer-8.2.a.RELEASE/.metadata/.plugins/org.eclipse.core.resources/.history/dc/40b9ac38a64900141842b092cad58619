@@ -1,0 +1,5 @@
+package com.gopivotal.bookshop.buslogic;
+
+public class ClientWorker {
+
+}

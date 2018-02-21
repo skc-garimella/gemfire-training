@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.cloudfoundry.ide.eclipse.server"
+      label="%featureName"
+      version="1.8.0.201502131756-RELEASE"
+      provider-name="%providerName"
+      plugin="org.cloudfoundry.ide.eclipse.server.branding">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseUrl">
+      %license
+   </license>
+
+   <plugin
+         id="org.cloudfoundry.ide.eclipse.server.core"
+         download-size="13431"
+         install-size="15439"
+         version="1.8.0.201502131756-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.cloudfoundry.ide.eclipse.server.rse"
+         download-size="35"
+         install-size="73"
+         version="1.8.0.201502131756-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.cloudfoundry.ide.eclipse.server.ui"
+         download-size="863"
+         install-size="1906"
+         version="1.8.0.201502131756-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.cloudfoundry.ide.eclipse.server.branding"
+         download-size="21"
+         install-size="27"
+         version="1.8.0.201502131756-RELEASE"
+         unpack="false"/>
+
+   <plugin
+         id="org.cloudfoundry.ide.eclipse.server.standalone"
+         download-size="1100"
+         install-size="1296"
+         version="1.8.0.201502131756-RELEASE"
+         unpack="false"/>
+
+</feature>

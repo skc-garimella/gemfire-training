@@ -1,0 +1,5 @@
+package com.gopivotal.bookshop.tests;
+
+public class SpringClientTests {
+
+}

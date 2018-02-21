@@ -1,0 +1,62 @@
+Manifest-Version: 1.0
+Require-Bundle: org.eclipse.ui.ide,org.eclipse.core.runtime,org.eclips
+ e.core.resources,org.eclipse.ui,org.eclipse.jdt.core,org.eclipse.ajdt
+ .core
+Bundle-Vendor: %providerName
+Ant-Version: Apache Ant 1.9.2
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: ajdtExamples.jar
+Bundle-Version: 2.2.4.e44x-20150202-1700
+Bundle-Name: AspectJ Examples
+Bundle-Localization: plugin
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.eclipse.ajdt.examples.AspectJExamplePlugin
+Created-By: 1.7.0_67-b01 (Oracle Corporation)
+Bundle-SymbolicName: org.eclipse.ajdt.examples; singleton:=true
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
+
+Name: archive/spacewar.jar
+SHA-256-Digest: glV1K+AqmRGGAYIi3G8lyrLRp0erUqRMC/W5qV76rC8=
+
+Name: META-INF/eclipse.inf
+SHA-256-Digest: G2hFTVPngfh5NUf96Pyy87A7XIE083udjEBFy4pUc/M=
+
+Name: archive/bean.jar
+SHA-256-Digest: YgrDLDyiIvfHy0XjzfVJushbkQi46S2Cl7oHqaHWbFM=
+
+Name: archive/introduction.jar
+SHA-256-Digest: dkVE14ruPwR0Q+AzIAxeOTyeQ1VdsK2EwElxYn8mqRM=
+
+Name: archive/tjp.jar
+SHA-256-Digest: nz1RWZ4yT93qH75Yf5/myFIdWee+VHBuIOnF12JDfAk=
+
+Name: plugin.properties
+SHA-256-Digest: SbFAegv/3qY6Rd3x+uLc9cf6V2QOPzRUYl034slvJPc=
+
+Name: schema/projectsetup.exsd
+SHA-256-Digest: nW+EYQPVuwIQAjbFHNwEQGU1aClTv2wVsQlqtxjz/mU=
+
+Name: plugin.xml
+SHA-256-Digest: Hwi7Xd5tcChXgfUHJCi7UDRgtYdkgILxr/fSApoWnGs=
+
+Name: about.html
+SHA-256-Digest: Zou0npn0qfCKRVjTOWfvcsgizJAClCvpMWgr81tFdag=
+
+Name: archive/tracing.jar
+SHA-256-Digest: 4NHwgjOvGrPJmVW+KF8WwnlkF8SjYHBzWbi++8cwLIs=
+
+Name: icons/newajprj_wiz.gif
+SHA-256-Digest: jsbep5zndMPmja67sidNHKiFS6wSkq0Xu3PPGf3C+Os=
+
+Name: ajdtExamples.jar
+SHA-256-Digest: +0g0If65bt0gM68kd60ZGOYG+/vuCrTaZ+owfz7LtuY=
+
+Name: archive/telecom.jar
+SHA-256-Digest: EUEr1uU0jUg7Qrm2uRwQViE+2PYwC0E6XM/KdMIMzi8=
+
+Name: archive/observer.jar
+SHA-256-Digest: a5fONGelsGwJ/wLxl/yEmWf0Q44ytk/8eVWERZ9VYTY=
+
+Name: archive/org.eclipse.ajdt.examples.progressmon.jar
+SHA-256-Digest: KeRT4tEH1meA7eCprUkJ59gnm6k0xkAgzNIJNKwqqcI=
+

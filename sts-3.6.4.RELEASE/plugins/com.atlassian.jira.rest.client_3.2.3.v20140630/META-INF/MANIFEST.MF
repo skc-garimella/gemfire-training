@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.2
+Created-By: 1.6.0_34-b04 (Sun Microsystems Inc.)
+Require-Bundle: org.joda.time,org.codehaus.jettison,org.apache.commons
+ .httpclient,com.google.guava,com.sun.jersey
+Export-Package: com.atlassian.jira.rest.client,com.atlassian.jira.rest
+ .client.auth,com.atlassian.jira.rest.client.domain,com.atlassian.jira
+ .rest.client.domain.input,com.atlassian.jira.rest.client.internal,com
+ .atlassian.jira.rest.client.internal.domain,com.atlassian.jira.rest.c
+ lient.internal.domain.input,com.atlassian.jira.rest.client.internal.j
+ ersey,com.atlassian.jira.rest.client.internal.json,com.atlassian.jira
+ .rest.client.internal.json.gen
+Bundle-Vendor: Atlassian
+Bundle-ClassPath: jira-rest-java-client-1.1-ide-m07.jar
+Bundle-Version: 3.2.3.v20140630
+Bundle-Name: Atlassian Jira Rest Java Client
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.atlassian.jira.rest.client
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

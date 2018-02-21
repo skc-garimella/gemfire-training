@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-ActivationPolicy: lazy
+Built-By: bamboo
+Bundle-Name: Groovy-Ant Plug-in
+Created-By: Apache Maven
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.ant.core,org.apac
+ he.ant;bundle-version="1.7.0",org.eclipse.jdt.core;bundle-version="3.
+ 6.0"
+Bundle-Vendor: Codehaus.org
+Build-Jdk: 1.7.0_67
+Bundle-Version: 2.9.2.xx-201509250011-e44
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.codehaus.groovy.eclipse.ant.Activator
+Bundle-SymbolicName: org.codehaus.groovy.eclipse.ant;singleton:=true
+Archiver-Version: Plexus Archiver
+
+Name: META-INF/maven/org.codehaus.groovy.eclipse/org.codehaus.groovy.e
+ clipse.ant/pom.properties
+SHA-256-Digest: 3X6umX3W8LVJNZNoDUah11+m/77HmTOGouozvx8Fp44=
+
+Name: org/codehaus/groovy/eclipse/ant/Activator.class
+SHA-256-Digest: iLuwojVBF8qWcFmBlyopkr4zWCUziUfxIk+1Gq3lbgA=
+
+Name: META-INF/maven/org.codehaus.groovy.eclipse/org.codehaus.groovy.e
+ clipse.ant/pom.xml
+SHA-256-Digest: MEGkAl3NURroQuEd98uMh3oOquEJGAGs4ihfB77H3ao=
+
+Name: groovyAntEclipse.jar
+SHA-256-Digest: 6/NkVNp89Or3aFKrCoT0GPvge+W6bQ+IGn3UgUUMwJ0=
+
+Name: plugin.xml
+SHA-256-Digest: cnSh6cmA/XOqaIMS3bLHKt5/zWA3YkHuQIEcX/B9SmA=
+
+Name: about.html
+SHA-256-Digest: Zou0npn0qfCKRVjTOWfvcsgizJAClCvpMWgr81tFdag=
+

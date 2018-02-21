@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.7.0_51
+Built-By: genie.egit
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.0.5
+
+Name: epl-v10.html
+SHA1-Digest: pTOyybcpEe+Y8lkSVUtarMleXqE=
+
+Name: META-INF/maven/org.eclipse.mylyn.github/org.eclipse.mylyn.github
+ .feature/pom.properties
+SHA1-Digest: ongcKLVbpihvMoamDpgzxLTHkLY=
+
+Name: META-INF/maven/org.eclipse.mylyn.github/org.eclipse.mylyn.github
+ .feature/pom.xml
+SHA1-Digest: qWVxs8S7HgS3zIaRUVB6aLycIVw=
+
+Name: license.html
+SHA1-Digest: 8sUK+MrPZReJxdCCP5dLLPdBK4c=
+
+Name: feature.properties
+SHA1-Digest: 4mijEVJzD62Oy0KTCiuWkcPLLSw=
+
+Name: feature.xml
+SHA1-Digest: kmP0iRfX9DLUGjyc81fL7Yob7fM=
+

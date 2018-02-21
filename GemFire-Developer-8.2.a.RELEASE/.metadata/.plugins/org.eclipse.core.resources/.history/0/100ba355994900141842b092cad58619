@@ -1,0 +1,7 @@
+package com.gopivotal.bookshop.buslogic;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface BookMasterRepository extends CrudRepository<T, ID> {
+
+}

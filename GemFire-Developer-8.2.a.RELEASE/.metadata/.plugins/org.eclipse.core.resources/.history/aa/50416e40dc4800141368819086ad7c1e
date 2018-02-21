@@ -1,0 +1,68 @@
+package com.gopivotal.bookshop.buslogic;
+
+import com.gemstone.gemfire.cache.Region;
+import com.gemstone.gemfire.cache.client.ClientCache;
+import com.gemstone.gemfire.cache.client.ClientCacheFactory;
+import com.gopivotal.bookshop.domain.BookMaster;
+import com.gopivotal.bookshop.domain.Customer;
+
+public class Client
+{
+
+		private ClientCache cache;
+		private Region <Integer, BookMaster> books;
+		private Region <Integer, Customer> customers;
+
+		/**
+		 * @param args
+		 */
+		public static void main(String[] args)
+		{
+			// TODO-04: Run this class to verify correct configuration of clientCache and 
+			// initialization of cache and regions in client
+			Client loader = new Client();
+			loader.getCache();
+			loader.getRegions();
+			loader.fetchItems();
+			
+
+		}
+		
+		public void setCache (ClientCache cache)
+		{
+			this.cache = cache;
+		}
+		
+		public void closeCache()
+		{
+			cache.close();
+		}
+		
+		public void getCache()
+		{
+			// TODO-02: Write the getCache method to initialize the client cache with the clientCache.xml file
+			this.cache = new ClientCacheFactory()
+	        .set("name", "ClientWorker")
+	        .set("cache-xml-file", "xml/clientCache.xml")
+	        .create();
+		}
+		
+		public void getRegions()
+		{
+			// TODO-03: Write the getRegions() method to get the BookMaster and Customer regions and assign to instance variables
+			books = cache.getRegion("BookMaster");
+			System.out.println("Got the BookMaster Region: " + books);
+			customers = cache.getRegion("Customer");
+			System.out.println("Got the Customer Region: " + customers);
+			
+		}
+
+		private void fetchItems() {
+			// Fetch & print Customers and Books	
+		}
+
+		
+		
+		
+
+}

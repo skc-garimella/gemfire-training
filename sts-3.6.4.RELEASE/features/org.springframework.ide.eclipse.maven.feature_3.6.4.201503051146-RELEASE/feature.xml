@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.springframework.ide.eclipse.maven.feature"
+      label="%featureName"
+      version="3.6.4.201503051146-RELEASE"
+      provider-name="%providerName"
+      plugin="org.springframework.ide.eclipse">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseUrl">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.springframework.ide.eclipse.feature" version="3.6.4" />
+   </requires>
+
+   <plugin
+         id="org.springframework.ide.eclipse.maven"
+         download-size="72"
+         install-size="151"
+         version="3.6.4.201503051146-RELEASE"
+         unpack="false"/>
+
+</feature>

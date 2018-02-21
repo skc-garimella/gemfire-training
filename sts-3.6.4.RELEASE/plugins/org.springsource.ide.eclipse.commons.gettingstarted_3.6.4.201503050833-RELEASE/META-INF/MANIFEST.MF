@@ -1,0 +1,294 @@
+Manifest-Version: 1.0
+Export-Package: org.springsource.ide.eclipse.commons.gettingstarted,or
+ g.springsource.ide.eclipse.commons.gettingstarted.dashboard
+Bundle-ActivationPolicy: lazy
+Built-By: bamboo
+Eclipse-BundleShape: dir
+Bundle-Name: Getting Started With Spring Integration
+Created-By: Apache Maven
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: com.sun.syndication,org.apache.commons.io,org.apache.c
+ ommons.lang,org.apache.commons.codec,org.springframework.web,org.spri
+ ngframework.core,org.eclipse.core.resources,org.eclipse.core.net,org.
+ eclipse.core.expressions,org.eclipse.ui,org.eclipse.ui.ide,org.eclips
+ e.ui.browser,org.eclipse.ui.forms,org.eclipse.mylyn.commons.core,org.
+ eclipse.mylyn.commons.ui,org.eclipse.mylyn.discovery.core,org.eclipse
+ .mylyn.discovery.ui,org.springsource.ide.eclipse.commons.configurator
+ ,org.springsource.ide.eclipse.commons.core,org.springsource.ide.eclip
+ se.commons.ui,org.springsource.ide.eclipse.dashboard.ui,org.springsou
+ rce.ide.eclipse.commons.browser,org.springsource.ide.eclipse.commons.
+ frameworks.ui
+Bundle-Vendor: Pivotal Software, Inc.
+Bundle-Version: 3.6.4.201503050833-RELEASE
+Build-Jdk: 1.7.0_67
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.springsource.ide.eclipse.commons.gettingstarted.
+ GettingStartedActivator
+Bundle-SymbolicName: org.springsource.ide.eclipse.commons.gettingstart
+ ed;singleton:=true
+Import-Package: org.eclipse.core.runtime,org.eclipse.osgi.service.data
+ location,org.eclipse.osgi.util,org.osgi.framework
+Source-Control-Identifier: b1747632bf5df0e816941d99de2b1d942081bc3f
+Archiver-Version: Plexus Archiver
+
+Name: resources/welcome/common/css/icons.css
+SHA1-Digest: P44aphpQ5jbD8V3kDR0I16ft5Js=
+
+Name: resources/welcome/common/img/bug_32.png
+SHA1-Digest: lgImveJAqvumsWHrSMhK9WzD51c=
+
+Name: resources/welcome/common/css/highlight.css
+SHA1-Digest: SjqMFha1GUaeznZRPZrCipmPf2c=
+
+Name: resources/welcome/common/img/springdocs_32.png
+SHA1-Digest: eXKxaalFD0Kh1YOrtHV8FykgjOs=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$6.class
+SHA1-Digest: 7GRBSuSv8p5Qn9XukFRgu/KzfyY=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$DashboardDiscoveryViewer.class
+SHA1-Digest: bJZ9C4qhzpJTbUe7ZKQinCRJqvI=
+
+Name: resources/welcome/common/img/logo_sts.png
+SHA1-Digest: CRxnu3q2IALql9VEo3wDNDjpp6w=
+
+Name: icons/spring_ext.png
+SHA1-Digest: Iyjs9yZKPUsVWPu3Eg7j4ahmCC8=
+
+Name: resources/welcome/common/css/main.css
+SHA1-Digest: dS9mxYe0dnqM0YKCbH7wxYMYJFU=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$1.class
+SHA1-Digest: QZRh1diy3bpTtWcfdiRfKx1BWYM=
+
+Name: resources/welcome/common/js/jquery.js
+SHA1-Digest: gZAoghGoXfDnJ5yYRAWQlMpiJwc=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Da
+ shboardCopier.class
+SHA1-Digest: cd3hE4iLxP+x/M0/tz6f9m+5XcA=
+
+Name: resources/welcome/common/css/flexbox.css
+SHA1-Digest: JIN7kci1dAVK89Q/dKxyv+BBPMQ=
+
+Name: resources/welcome/common/css/projects.css
+SHA1-Digest: rVuGdP+an6SjjudXFBwfccDo6ac=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Pr
+ ojectWizardProvider.class
+SHA1-Digest: 8gZGFkLKOBd1lbuJXYeDW4J/+a8=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$7.class
+SHA1-Digest: 11q2H0Vjtkix4l3LQr3GCw7ZWQU=
+
+Name: resources/welcome/common/bootstrap/js/bootstrap.min.js
+SHA1-Digest: bKxEZBT8SBiaFKXRomEapUyrdcI=
+
+Name: resources/welcome/common/img/guides_32.png
+SHA1-Digest: aqODk5+rm/XMeY9Xnw+FBfJpS1w=
+
+Name: resources/welcome/common/bootstrap/css/bootstrap.css
+SHA1-Digest: pFfenh6rIlloA86K/95mcSs+2AY=
+
+Name: resources/welcome/common/font-custom/fontcustom.woff
+SHA1-Digest: 2UDEH0Q0Srpwzx536GQOecoRGhU=
+
+Name: resources/welcome/common/js/guide.js
+SHA1-Digest: 2uJgWbSsczZXTl5d+xYFoKlrI2c=
+
+Name: resources/welcome/common/css/tools.css
+SHA1-Digest: SkqmTc9d0XlY7g1BRzuC98MokNY=
+
+Name: resources/welcome/common/bootstrap/css/bootstrap.min.js
+SHA1-Digest: bKxEZBT8SBiaFKXRomEapUyrdcI=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$5.class
+SHA1-Digest: uCuSLVfHA1YlTxufCJM0Sao1770=
+
+Name: resources/welcome/common/font-awesome/css/font-awesome.css
+SHA1-Digest: Ko7M9KwojrmZebYtzBzBA22P+Po=
+
+Name: resources/welcome/common/css/typography.css
+SHA1-Digest: 2cf6w8/s7bjbhmZFK0P5vjTSJQc=
+
+Name: resources/welcome/common/img/compass_32.png
+SHA1-Digest: zR9FLQfkst/svYUChGXN+rvKl/w=
+
+Name: resources/welcome/common/bootstrap/js/bootstrap-datetimepicker/j
+ s/bootstrap-datetimepicker.min.js
+SHA1-Digest: joJznshsf/Z12na5YbZhlAagqM8=
+
+Name: resources/welcome/common/img/new_32.png
+SHA1-Digest: qpqOJqrBX+dSKHcF81YBmtLQWPs=
+
+Name: resources/welcome/common/img/logo_bigleaf.png
+SHA1-Digest: lzDPo68Lm1Y/nlk4sUk7zBr+sK4=
+
+Name: resources/welcome/common/img/compass.png
+SHA1-Digest: S0J1tCA+4Y0SodeKgt4l63jPWqY=
+
+Name: resources/welcome/common/css/panes.css
+SHA1-Digest: Msj4/jFxKOW9BKjIeFPVnFC85e0=
+
+Name: resources/welcome/common/img/blog.png
+SHA1-Digest: SwXrL6l0DIXJAWy2cPS+C1Yk8pE=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Fe
+ edProvider.class
+SHA1-Digest: gppnpUao/qPPOKO7KxHOJKetcGg=
+
+Name: resources/welcome/common/bootstrap-datetimepicker/js/bootstrap-d
+ atetimepicker.min.js
+SHA1-Digest: joJznshsf/Z12na5YbZhlAagqM8=
+
+Name: resources/welcome/common/css/blog.css
+SHA1-Digest: /ysUxWnMDTyXSl4qgYFZOEUZXeA=
+
+Name: resources/welcome/common/img/overlay-incoming.png
+SHA1-Digest: b6E9kaO99pcNIF+l4iTHdRvTBq4=
+
+Name: resources/welcome/common/img/springdocs.png
+SHA1-Digest: qb3zrOhRmrCCokx1S7I3WhNlrEc=
+
+Name: icons/spring.png
+SHA1-Digest: MwmZn10gyEAgALCYBQECZdoBrDs=
+
+Name: resources/welcome/common/img/favicon.png
+SHA1-Digest: MwmZn10gyEAgALCYBQECZdoBrDs=
+
+Name: resources/welcome/common/img/extension.png
+SHA1-Digest: GTl5F+vijNKT7FqMUvuqlobcvvE=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Bl
+ ogsProvider$1.class
+SHA1-Digest: PghmEnHFK71yeyNS4Fu5ZdzUkQc=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$3.class
+SHA1-Digest: VmDzvExqS6DmZ+bPtHi1W3AhO/Y=
+
+Name: resources/welcome/common/img/extension_32.png
+SHA1-Digest: n221J84W8VEuIGRibdCjlRzydzI=
+
+Name: resources/welcome/common/js/filter.js
+SHA1-Digest: PnKFlXfsPg7CuKeiwj0tK6HAE7Q=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Up
+ datesProvider$1.class
+SHA1-Digest: PBAuyUS6Tz2vmyjpOq0tiNnvruw=
+
+Name: resources/welcome/common/img/comparison_32.png
+SHA1-Digest: wvZ1b6roZv7i6fXtC6HX2ZjjS1s=
+
+Name: resources/welcome/index.html
+SHA1-Digest: 0O3uEAxCIEmtbmTc6tEMqV5nwjw=
+
+Name: resources/welcome/common/img/forum_32.png
+SHA1-Digest: fOCzWovPlW+ep3KtW13BTYOVEL4=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/GettingStart
+ edActivator.class
+SHA1-Digest: D0SkvjSNKim7SHL4CqHiQPMBhEo=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$6$1.class
+SHA1-Digest: Q41uEDfTC4GzE76ANmIyawJ7kkA=
+
+Name: resources/welcome/common/css/font-awesome.css
+SHA1-Digest: Ko7M9KwojrmZebYtzBzBA22P+Po=
+
+Name: resources/welcome/common/css/dashboard.css
+SHA1-Digest: +vgE7iDE3SDMv1N6TklbW1NR6Y8=
+
+Name: resources/welcome/common/img/blog_32.png
+SHA1-Digest: /1UPZiIJm/VZeILf/KZOtz7W+Bo=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$8.class
+SHA1-Digest: RnDe5TW0/sf3Ay1DGQKs6fYj4s8=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor.class
+SHA1-Digest: vWbG4wosGD3s3oN58CjwXfk974o=
+
+Name: resources/welcome/common/img/spring-logo.png
+SHA1-Digest: /XJJqkLgmOiJ89OqI1sU3jWI1qc=
+
+Name: resources/welcome/common/css/homepage.css
+SHA1-Digest: WGfd21yalK/967mZEA+k9uPSreQ=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/We
+ lcomeDashboard.class
+SHA1-Digest: FsD6OYo08ndEuGRrMXoCIEepVcQ=
+
+Name: about.html
+SHA1-Digest: UY3+HVxgC8uFsigkMiJmIZniQ6c=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Bl
+ ogsProvider.class
+SHA1-Digest: MwE1C+jR6sDDlwY4NefQphozZ5s=
+
+Name: resources/welcome/common/img/forum.png
+SHA1-Digest: IrC+2JrJjLNwrscxaXC7mNInx+Y=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$4.class
+SHA1-Digest: KWTPDd1j1fz1E2WCezuVWeDL7+A=
+
+Name: resources/welcome/common/img/question.png
+SHA1-Digest: HJiKlW//xSeI3st3BSB5FUblYdQ=
+
+Name: resources/welcome/common/img/guides.png
+SHA1-Digest: EcqW/rIhiL1bu6xbQgLkzkx/6hg=
+
+Name: resources/welcome/common/js/modernizer.flexbox.js
+SHA1-Digest: 3qNpsubBs4QGUxOCF3l0xxZr7Hg=
+
+Name: resources/welcome/common/css/application.css
+SHA1-Digest: pCYrmpAG7G8lf7vwW2vBfSobJrs=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Ex
+ tensionsEditor$2.class
+SHA1-Digest: PvsFXABG1POPmOFVmP9nP6y1gFI=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Up
+ datesProvider.class
+SHA1-Digest: G5IHdDIFXKhChdcDyXUjxO5XZgc=
+
+Name: resources/welcome/common/js/application.js
+SHA1-Digest: 70vkjictdKQqVR/TzbgqFCkhH9Y=
+
+Name: resources/welcome/common/css/responsive.css
+SHA1-Digest: GOoQ2nj/MhT1aWU9zGipe8pgeAs=
+
+Name: resources/welcome/common/css/markdown-content.css
+SHA1-Digest: e/KhrtBxS+P6SBy2STVX6j8rmLo=
+
+Name: resources/welcome/common/css/docs.css
+SHA1-Digest: r4SY1DJMbbHof85uKR1XIwni08Q=
+
+Name: resources/welcome/common/img/logo_spring.png
+SHA1-Digest: NQUu2q2kB/OWHqikOUXTZqMlAuI=
+
+Name: plugin.xml
+SHA1-Digest: 93n/B5+D4y1dV0Ws7uaTjJOOorg=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/Fe
+ edProvider$1.class
+SHA1-Digest: ITkFAJpG1Ngaxl6ZXznlwMdU40k=
+
+Name: resources/welcome/common/css/buttons.css
+SHA1-Digest: RS2KKW0Y+dlFj2rCgA6KIvb+gDs=
+
+Name: resources/welcome/common/css/fontcustom.css
+SHA1-Digest: IWBrZIepmNsdDFZmVx+uVhZfZDE=
+
+Name: org/springsource/ide/eclipse/commons/gettingstarted/dashboard/We
+ lcomeDashboard$1.class
+SHA1-Digest: 0K3ub7Bx3ACmFeJm0ubOZB5B0Mc=
+

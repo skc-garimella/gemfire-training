@@ -1,0 +1,41 @@
+package com.gopivotal.bookshop.tests;
+
+import static org.junit.Assert.assertEquals;
+
+import javax.annotation.Resource;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.gemfire.GemfireTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.gemstone.gemfire.cache.Region;
+import com.gemstone.gemfire.cache.query.SelectResults;
+import com.gopivotal.bookshop.domain.BookMaster;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:META-INF/spring/gemfire/cache-config.xml")
+// TODO-04: Open and review basic Spring Test configuration
+public class SpringClientTests {
+	@Resource(name="BookMaster")
+	Region<Integer,BookMaster> books;
+	@Autowired
+	GemfireTemplate template;
+	
+	@Test
+	// TODO-05: Run first test to verify basic configuration
+	public void simpleClientTest() {
+		BookMaster book = (BookMaster) books.get(456);
+		assertEquals("Clifford the Big Red Dog", book.getTitle());	
+	}
+
+	@Test
+	public void testGemFireTemplate() {
+		//GemfireTemplate template = new GemfireTemplate(books);
+		SelectResults<BookMaster> results = template.query("author = 'Daisy Mae West'");
+		assertEquals(1,results.size());
+		assertEquals("A Treatise of Treatises", results.asList().get(0).getTitle());
+	}
+}

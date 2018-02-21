@@ -1,0 +1,104 @@
+package com.gopivotal.bookshop.buslogic;
+
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import com.gemstone.gemfire.GemFireCheckedException;
+import com.gemstone.gemfire.GemFireException;
+import com.gemstone.gemfire.cache.client.ClientCache;
+import com.gemstone.gemfire.cache.client.ClientCacheFactory;
+import com.gemstone.gemfire.cache.client.Pool;
+import com.gemstone.gemfire.cache.client.PoolManager;
+import com.gemstone.gemfire.cache.query.CqAttributes;
+import com.gemstone.gemfire.cache.query.CqAttributesFactory;
+import com.gemstone.gemfire.cache.query.CqQuery;
+import com.gemstone.gemfire.cache.query.QueryService;
+import com.gemstone.gemfire.cache.query.SelectResults;
+import com.gopivotal.bookshop.domain.BookOrder;
+
+public class CQClient
+{
+private ClientCache cache;
+	
+	public static void main(String[] args) throws Exception
+	{
+		CQClient consumer = new CQClient();
+		consumer.getCache();
+	
+		
+		try
+		{
+			consumer.registerCq();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Press enter to end");
+        bufferedReader.readLine();
+		consumer.closeCache();
+
+	}
+	
+
+	public void registerCq() throws GemFireException, GemFireCheckedException
+	{
+		//Get a reference to the pool
+		Pool myPool = PoolManager.find("client");
+
+
+		// TODO-07: Get the query service for the Pool 
+		QueryService queryService = myPool.getQueryService(); 
+
+		// TODO-08: Create CQ Attributes, registering the SimpleCQListener implementation class
+		CqAttributesFactory cqAf = new CqAttributesFactory();
+		cqAf.addCqListener(new SimpleCQListener());
+		CqAttributes cqa = cqAf.create();  
+
+		// TODO-09: Construct a query that will trigger a CQEvent when a BookOrder has a totalPrice value > $100
+		//String query = "IMPORT com.xyz.domain.BookOrder; " +
+	    String query = "SELECT * FROM /BookOrder b type BookOrder WHERE b.totalPrice > 100.00";
+
+		// TODO-10: Create the continuous query and execute it. If executing with initial results, capture
+		//          the results and iterate over them, printing the orders
+		CqQuery myCq = queryService.newCq("myCQ", query, cqa); 
+		System.out.println("Made new CQ Service");
+		try
+		{
+			SelectResults sResults = myCq.executeWithInitialResults();
+			List orders = sResults.asList();
+			for (int i=0; i < orders.size(); i++) {
+				BookOrder obj = (BookOrder) orders.get(i);
+				System.out.println("Intial Result includes: " + obj);
+			}
+		} 
+		catch (Exception ex)
+		{
+		  ex.printStackTrace();
+		}
+
+	}
+	
+	public void closeCache()
+	{
+		cache.close();
+	}
+	
+	public void getCache()
+	{
+
+	    
+	    cache = new ClientCacheFactory()
+	    .set("name", "CQClient")
+        .set("cache-xml-file", "xml/clientConsumerCache.xml")
+        .create();
+	}
+
+}
+

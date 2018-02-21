@@ -1,0 +1,24 @@
+package com.gopivotal.bookshop.tests;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.gemstone.gemfire.cache.Region;
+import com.gopivotal.bookshop.domain.BookMaster;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:META-INF/spring/gemfire/cache-config.xml")
+public class SpringClientTests {
+	@Autowired
+	Region<String,BookMaster> books;
+	
+	@Test
+	public void simpleClientTest() {
+		BookMaster book = books.get(456);
+		System.out.println("Fetched book: " + book);
+		
+	}
+}

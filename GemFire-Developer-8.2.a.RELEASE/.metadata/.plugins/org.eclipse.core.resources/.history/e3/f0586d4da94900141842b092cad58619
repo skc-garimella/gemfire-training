@@ -1,0 +1,36 @@
+package com.gopivotal.bookshop.buslogic;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.gemstone.gemfire.cache.Region;
+import com.gopivotal.bookshop.domain.BookMaster;
+
+public class ClientConsumer {
+	public static void main(String[] args) throws Exception {
+		// Initialize the application context, which defines the BookMaster region and registers interest
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/gemfire/cache-config.xml");
+		Region<Integer, BookMaster> books = context.getBean("BookMaster", Region.class);
+		//books.registerInterest(999);
+		
+		/*
+		 * This code is simply output to the console to tell the user what's going on. This is especially important as 
+		 * work will be coordinated between this class and the ClientWorker class running at the same time.
+		 */
+		System.out.println("The data region has a listener that reports all changes to standard out.");
+		System.out.println();
+		System.out.println("Please run the worker client in another session. It will update the");
+		System.out.println("cache and the server will forward the updates to me. Note the listener");
+		System.out.println("output in this session.");
+		System.out.println();
+		System.out.println("When the other client finishes, hit Enter to exit this program.");
+
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		bufferedReader.readLine();
+
+		System.out.println("Closing the cache and disconnecting.");
+	}
+
+}

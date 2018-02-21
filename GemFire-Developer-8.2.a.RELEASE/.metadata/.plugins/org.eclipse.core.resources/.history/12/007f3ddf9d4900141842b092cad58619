@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:gfe="http://www.springframework.org/schema/gemfire"
+	xmlns:gfe-data="http://www.springframework.org/schema/data/gemfire"
+	xsi:schemaLocation="http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/data/gemfire http://www.springframework.org/schema/data/gemfire/spring-data-gemfire-1.5.xsd">
+	
+	<!-- TODO-01: Define a client pool -->
+	<!-- TODO-14: Enable subscriptions on the pool -->
+	<gfe:pool id="gemfirePool" subscription-enabled="true">
+		<gfe:locator host="localhost" port="41111"/>
+	</gfe:pool>
+	
+	<!-- TODO-02: Define the overall client cache declaration and point it to the pool object created above -->
+	<gfe:client-cache pool-name="gemfirePool"/>
+	
+	<!-- TODO-03: Define a client region as a proxy for the BookMaster -->
+	<gfe:client-region id="BookMaster" pool-name="gemfirePool" shortcut="CACHING_PROXY">
+	   <!-- TODO-15: Register a cache listener -->
+	   <gfe:cache-listener>
+	   		<bean class="com.gopivotal.bookshop.buslogic.LoggingCacheListener" />
+	   </gfe:cache-listener>
+	   <gfe:key-interest receive-values="true"></gfe:key-interest>
+	</gfe:client-region>
+	
+	<!-- TODO-06: Add a definition to create a GemfireTemplate and use the BookMaster region -->
+	<bean id="gfTemplate" class="org.springframework.data.gemfire.GemfireTemplate">
+		<constructor-arg ref="BookMaster" />
+	</bean>
+	
+	<!-- TODO-11: Enable gfe-data namespace and create a gfe-data:repositories declaration that scans the appropriate package -->
+	<gfe-data:repositories base-package="com.gopivotal.bookshop.buslogic" />
+	
+</beans>

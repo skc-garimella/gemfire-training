@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Build-Jdk: 1.7.0_51
+Built-By: genie.technology.efxclipse
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.0.5
+
+Name: feature.xml
+SHA1-Digest: a3tahzBxSEEy2QbtaAzD0bcYZoY=
+
